@@ -14,16 +14,17 @@ export const Login = () => {
       password: password,
     };
     axios
-      // .post("https://admin-apis.vercel.app/login", payload)
-      .post("/api/login", payload)
+      .post("https://admin-apis.vercel.app/login", payload)
+      // .post("/api/login", payload)
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem("token", token);
-        console.log("login successful", token);
         navigation("/admin/dashboard");
       })
       .catch((err) => {
-        console.log("login failed", err);
+        console.log("Status:", err.response?.status);
+        console.log("Data:", err.response?.data);
+        console.log("Full Error:", err);
       });
   };
   return (

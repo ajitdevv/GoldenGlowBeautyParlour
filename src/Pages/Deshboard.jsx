@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { getProducts } from "../apis/product";
+import { getProducts } from "../apis/product";
 
 const Deshboard = () => {
-//   let [productdata, setproductdata] = useState([]);
-//   useEffect(() => {
-//     getProducts()
-//       .then((data) => {
-//         setproductdata(data);
-//       })
-//       .catch((err) => {
-//         console.log("Error fetching products:", err);
-//       });
-//   });
-//   console.log(productdata);
+  let [productdata, setproductdata] = useState([]);
+  useEffect(() => {
+    getProducts()
+      .then((data) => {
+        setproductdata(data);
+      })
+      .catch((err) => {
+        console.log("Error fetching products:", err);
+      });
+  },[]);
+  console.log(productdata);
   
   let navigation = useNavigate();
   let handellogout = () => {
