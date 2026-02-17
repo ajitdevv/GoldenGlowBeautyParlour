@@ -2,7 +2,7 @@
 
 @theme {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-foreground: var(--foreground);  
 
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
@@ -21,8 +21,8 @@
 
   /* Light mode — Golden Glow */
   :root {
-    --background: #FFE6EA;
-    --card: #FFFFFF;
+    --background: #ffffff;
+    --card: #dcdbdb;
     --card-soft: #FFF4F0;
 
     --foreground: #1A1A1A;
@@ -33,7 +33,7 @@
     --accent: #8A6A2B;
 
     --border: #EFEFEF;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow: 1px 6px 16px rgba(0, 0, 0, 0.1);
   }
 
   /* Dark mode — safe & premium */
@@ -50,7 +50,8 @@
     --accent: #B89A4A;
 
     --border: #2A2A2A;
-    --shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    /* --shadow: 1px 6px 16px 0px rgba(0, 0, 0, 0.1); */
+    --shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
   }
 
 
