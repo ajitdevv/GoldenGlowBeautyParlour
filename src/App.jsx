@@ -1,16 +1,27 @@
-import  mehndiImages  from "./data/mehndiphotos";
+import { Navigate, Route, Router, Routes } from "react-router-dom";
+import { Login } from "./Pages/login";
+import React from "react";
+import Deshboard from "./Pages/Deshboard";
+import ProtectedRoute from "./components/productedrouts";
 function App() {
   return (
-    <div className="grid grid-cols-4 gap-2 p-4">
-      {mehndiImages.map((image) => (
-        <img
-          className="size-cover w-full h-full rounded-lg"
-          key={image.id}
-          src={image.url}
-          alt={`Mehndi ${image.id}`}
-        />
-      ))}
-    </div>
+    // <div className="w-full h-screen flex items-center justify-center bg-linear-to-r from-primary to-secondary">
+    //   <Login />
+    // </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute>
+            <Deshboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
   );
 }
 

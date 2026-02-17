@@ -35,4 +35,3 @@
     { id: 34, url: "https://res.cloudinary.com/djl1swpiu/image/upload/v1767677311/photo_2026-01-06_10-49-50_tepy5i.jpg" },
     { id: 35, url: "https://res.cloudinary.com/djl1swpiu/image/upload/v1767677308/photo_2026-01-06_10-50-49_pzid8a.jpg" }
 ];
-export default mehndiImages;

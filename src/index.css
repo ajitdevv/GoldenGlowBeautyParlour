@@ -1,59 +1,61 @@
 @import "tailwindcss";
 
 @theme {
-  --color-border: var(--border);
-
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
   --color-primary: var(--primary);
-  --color-accent: var(--accent);
   --color-primary-foreground: var(--primary-foreground);
-  --color-card: var(--card);
+
+  --color-accent: var(--accent);
   --color-muted: var(--muted);
 
-  --color-shadow: var(--shadow);
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
 
+  --color-border: var(--border);
+  --color-shadow: var(--shadow);
 }
 
 @layer base {
 
+  /* Light mode — Golden Glow */
   :root {
-    --background: #cce5ff;
-    --foreground: #020617;
-
+    --background: #FFE6EA;
     --card: #FFFFFF;
-    --border: #E2E8F0;
-    --primary: #0EA5E9;
+    --card-soft: #FFF4F0;
+
+    --foreground: #1A1A1A;
+    --muted: #666666;
+
+    --primary: #C9A24D;
     --primary-foreground: #FFFFFF;
+    --accent: #8A6A2B;
 
-    --accent: #3c69cc;
-    --muted: #64748B;
-    --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+    --border: #EFEFEF;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
+  /* Dark mode — safe & premium */
   .dark {
-    --background: #020617;
-    --foreground: #F8FAFC;
+    --background: #0F0F0F;
+    --card: #161616;
+    --card-soft: #1D1D1D;
 
-    --card: #0F172A;
-    --border: #334155;
+    --foreground: #F5F5F5;
+    --muted: #A1A1A1;
 
-    --primary: #F97316;
-    --primary-foreground: #020617;
+    --primary: #D4B35F;
+    --primary-foreground: #1A1A1A;
+    --accent: #B89A4A;
 
-    --accent: #FACC15;
-    --muted: #94A3B8;
-
-    --shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+    --border: #2A2A2A;
+    --shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
   }
+
 
   * {
     @apply border-border;
-  }
-
-  html {
-    @apply scroll-smooth
   }
 
   body {
@@ -65,17 +67,6 @@
 }
 
 @layer components {
-  /* .cosmic-button {
-    @apply px-6 py-3 rounded-xl font-semibold bg-gradient-to-r from-orange-500 to-pink-500 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl;
-  } */
-
-  .cosmic-button {
-    @apply px-6 py-2 rounded-xl bg-primary text-primary-foreground font-medium transition-transform duration-300 hover:bg-primary hover:shadow-(--shadow) hover:scale-95 shadow-lg;
-  }
-
-  .card {
-    @apply p-3 rounded-2xl bg-card
-  }
 
   #root {
     max-width: 100%;
