@@ -23,7 +23,7 @@
   :root {
     --background: #ffffff;
     --card: #dcdbdb;
-    --card-soft: #FFF4F0;
+    --card-soft: #eff3f4;
 
     --foreground: #1A1A1A;
     --muted: #666666;
@@ -38,9 +38,9 @@
 
   /* Dark mode — safe & premium */
   .dark {
-    --background: #0F0F0F;
-    --card: #161616;
-    --card-soft: #1D1D1D;
+     --background: #0f172a;    
+  --card: #27364d;           
+  --card-soft: #334155; 
 
     --foreground: #F5F5F5;
     --muted: #A1A1A1;
