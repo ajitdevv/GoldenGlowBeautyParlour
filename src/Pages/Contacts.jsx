@@ -109,9 +109,9 @@ const ContactsPage = () => {
               </div>
             </div>
           ))}
-        `{!loading && error && (
+        {!loading && error && (
           <div className="col-span-full text-center text-red-400">{error}</div>
-        )}`
+        )}
         {!loading &&
           !error &&
           sortdata.length > 0 &&
