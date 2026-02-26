@@ -15,10 +15,16 @@ export const Login = () => {
     };
     axios
       .post("https://admin-apis.vercel.app/login", payload)
-      // .post("/api/login", payload)
       .then((res) => {
-        const token = res.data.token;
-        localStorage.setItem("token", token);
+        const data = res.data;
+        localStorage.setItem("token", data.token);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            username: data.username,
+            email: data.email,
+          }),
+        );
         navigation("/admin/dashboard");
       })
       .catch((err) => {
@@ -81,10 +87,10 @@ export const Login = () => {
 
         <button
           onClick={handelSubmit}
-          className={`bg-foreground font-bold text-white w-full rounded-lg p-2 mt-2 transform-transition duration-500 ${
+          className={`bg-foreground font-bold text-background w-full rounded-lg p-2 mt-2 transform-transition duration-500 ${
             !username.trim() || !password.trim()
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-foreground text-white cursor-pointer"
+              ? "bg-muted text-muted cursor-not-allowed"
+              : "bg-foreground text-background  cursor-pointer"
           }`}
         >
           Sign in

@@ -1,13 +1,17 @@
 import {
+  GithubIcon,
   HomeIcon,
+  InstagramIcon,
+  Linkedin,
   LogOutIcon,
   LucidePencilLine,
   MapPinHouse,
   Phone,
   ReceiptTextIcon,
   SettingsIcon,
+  YoutubeIcon,
 } from "lucide-react";
-import logo from "../assets/logoAj.png";
+import weblogo from "../assets/logoAj.png";
 import Themetoggle from "../components/Themetoggle";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -21,12 +25,12 @@ const Sidebar = () => {
       name: "Home",
       path: "/admin/dashboard",
     },
-    { id: "2", logo: <Phone size={17} />, name: "Contact", path: "/contact" },
+    { id: "2", logo: <Phone size={17} />, name: "Contact", path: "/admin/contact" },
     {
       id: "3",
       logo: <MapPinHouse size={17} />,
       name: "Companys",
-      path: "/companys",
+      path: "/admin/companys",
     },
     {
       id: "4",
@@ -47,18 +51,22 @@ const Sidebar = () => {
       path: "/settings",
     },
   ];
-  
+  const SocialMedia = [
+    { id: "1", logo: <InstagramIcon size={17} /> },
+    { id: "2", logo: <YoutubeIcon size={17} /> },
+    { id: "3", logo: <Linkedin size={17} /> },
+    { id: "4", logo: <GithubIcon size={17} /> },
+  ];
   return (
     <div className="w-full flex flex-col  items-center bg-card-soft h-screen p-4 ">
       <div className="flex gap-3 justify-start items-center mt-7">
         <div className="size-9 ">
-          <img src={logo} alt={logo} />
+          <img src={weblogo} alt={weblogo} />
         </div>
         <div>
           <h1 className="text-foreground text-2xl font-bold">DashBoard</h1>
         </div>
       </div>
-
       <div className="flex w-full justify-end ">
         <Themetoggle />
       </div>
@@ -84,12 +92,12 @@ const Sidebar = () => {
                 className={({ isActive }) =>
                   `w-full text-left text-sm font-medium transition-colors ${
                     isActive
-                      ? "text-foreground "
+                      ? "text-foreground  "
                       : "text-muted hover:text-foreground"
                   }`
                 }
               >
-                <div className="flex gap-2 items-center hover:translate-x-8 transition-transform duration-500 hover:scale-110">
+                <div className="flex gap-2 items-center hover:translate-x-8 transition-transform duration-300 hover:scale-110">
                   <div>{item.logo}</div>
                   <h1 className="text-sm">{item.name}</h1>
                 </div>
@@ -107,11 +115,19 @@ const Sidebar = () => {
           }}
           className=" transition-colors flex items-center gap-1 text-sm font-medium text-muted cursor-pointer hover:text-red-500"
         >
-         <LogOutIcon size={17}/> Logout
+          <LogOutIcon size={17} /> Logout
         </button>
       </div>
-      <div>
-
+      <div className="flex gap-4">
+        {SocialMedia.map((item, index) => {
+          return (
+            <div key={index} className="mt-7 gap-3 items-center justify-start">
+              <ul className="text-muted cursor-pointer hover:text-foreground transition-colors">
+                {item.logo}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

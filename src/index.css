@@ -2,7 +2,7 @@
 
 @theme {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);  
+  --color-foreground: var(--foreground);
 
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
@@ -28,17 +28,17 @@
     --foreground: #1A1A1A;
     --muted: #666666;
 
-    --primary: #C9A24D;
+    --primary: #efcb7c;
     --primary-foreground: #FFFFFF;
     --accent: #8A6A2B;
 
     --border: #EFEFEF;
-    --shadow: 1px 6px 16px rgba(0, 0, 0, 0.1);
+    --shadow:0 4px 6px rgba(0,0,0,0.05),0 10px 15px rgba(0,0,0,0.08);
   }
 
   /* Dark mode — safe & premium */
   .dark {
-     --background: #0f172a;    
+    /* --background: #0f172a;    
   --card: #27364d;           
   --card-soft: #334155; 
 
@@ -51,7 +51,25 @@
 
     --border: #2A2A2A;
     /* --shadow: 1px 6px 16px 0px rgba(0, 0, 0, 0.1); */
-    --shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+    /* --shadow: 0 4px 20px rgba(255, 255, 255, 0.05);  */
+    /* --background: #0B1C2D; */
+    --background: #080d34;
+    --card: #323252;
+    --card-soft: #0e0e1f;
+    --foreground: #f3f8fc;
+    --muted: #9BA3AF;
+
+    --primary: #4F9CF9;
+    --primary-foreground: #FFFFFF;
+
+    --accent: #7DD3FC;
+    /* Soft cyan highlight */
+
+    --border: #2C2C30;
+    /* Subtle charcoal border */
+    /* --shadow: 0px 8px 24px rgba(0, 0, 0, 0.4); */
+    /* --shadow: 0 4px 20px rgba(243, 237, 237, 0.5),0 0 15px rgba(240, 244, 251, 0.3); */
+    --shadow: 0 8px 25px rgba(51, 51, 51, 0.6),0 0 20px rgba(64, 75, 94, 0.12);
   }
 
 

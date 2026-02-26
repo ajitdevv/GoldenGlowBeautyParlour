@@ -26,7 +26,7 @@ const Themetoggle = () => {
     <div className="flex mt-7">
            <div
              onClick={() => setTheme(!theme)}
-             className="w-12 h-7 bg-card rounded-full flex items-center px-1 cursor-pointer transition"
+             className="w-12 h-7 bg-card rounded-full flex items-center px-1 cursor-pointer shadow-(--shadow) transition"
            >
              <div
                className={`size-5 bg-background rounded-full flex items-center justify-center shadow-md transform transition duration-500 ${

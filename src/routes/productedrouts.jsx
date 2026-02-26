@@ -5,7 +5,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (!token) {
     alert("Please login to access the dashboard.");
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;
