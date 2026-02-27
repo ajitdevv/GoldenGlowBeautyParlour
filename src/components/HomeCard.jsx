@@ -6,7 +6,7 @@ export const HomeCard = ({ title, value, logo }) => {
         {logo}
       </div>
       <div>
-        <p className="text-3xl font-bold">{value}</p>
+        <p className="text-2xl font-bold">{value}</p>
       </div>
     </div>
   );
