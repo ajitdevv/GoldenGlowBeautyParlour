@@ -5,7 +5,7 @@ import TotalCards from "../componentpreant/TotalCards";
 import { RevenueGraph } from "../components/RevenueGraph";
 import { ManufacturerChart } from "../components/CategoryChart";
 import AccountBar from "../componentpreant/AccountBar";
-import HadingSubhading from "../components/HadingSubhading";
+import HeadingSubheading from "../components/HeadingSubheading";
 
 const Deshboard = () => {
   let [productdata, setproductdata] = useState([]);
@@ -43,7 +43,7 @@ const Deshboard = () => {
       <div>
         <AccountBar />
       </div>
-      <HadingSubhading
+      <HeadingSubheading
         h1={"Dashboard"}
         h2={"Welcome to your new CRM dashboard"}
       />

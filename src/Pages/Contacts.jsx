@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Getmanufacturers } from "../apis/product";
 import { ContactCard } from "../components/ContactCard";
 import AccountBar from "../componentpreant/AccountBar";
-import HadingSubhading from "../components/HadingSubhading";
+import HeadingSubheading from "../components/HeadingSubheading";
 
 const ContactsPage = () => {
   let [Manufacturedata, setManufacturedata] = useState([]);
@@ -61,7 +61,7 @@ const ContactsPage = () => {
       </div>
       <div className="flex justify-between w-full pr-5">
         <div className="pr-3">
-          <HadingSubhading
+          <HeadingSubheading
             h1={"Contacts"}
             h2={"Contact Manage your contact relationshipss"}
           />

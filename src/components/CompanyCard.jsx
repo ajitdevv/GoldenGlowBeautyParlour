@@ -1,6 +1,6 @@
 import { PlaneLandingIcon, BoxesIcon } from "lucide-react";
 
-const CompanyCard = ({ Name, Cetagory, Location, ProductsCount }) => {
+const CompanyCard = ({ Name, Category, Location, ProductsCount }) => {
   return (
     <div
       className="
@@ -28,8 +28,8 @@ const CompanyCard = ({ Name, Cetagory, Location, ProductsCount }) => {
         {Location}
       </p>
 
-      <p className="text-card flex w-full mt-2">
-        Category: {Cetagory}
+      <p className="text-card flex w-full mt-2 whitespace-nowrap">
+        Category: {Category}
       </p>
 
       <p className="flex items-center gap-2 text-card mt-1">
