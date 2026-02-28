@@ -52,10 +52,10 @@ const Deshboard = () => {
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl shadow-md p-6 animate-pulse"
+              className="bg-white rounded-2xl flex flex-col gap-2 items-center shadow-md p-6 animate-pulse"
             >
-              <div className="h-5 bg-gray-300 rounded w-1/2 mb-4"></div>
-              <div className="h-10 bg-gray-300 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-300 rounded w-1/2 mb-4"></div>
+              <div className="h-8 bg-gray-300 rounded w-3/4"></div>
             </div>
           ))}
         </div>

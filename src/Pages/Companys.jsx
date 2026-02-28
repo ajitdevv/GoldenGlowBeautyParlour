@@ -83,14 +83,14 @@ const CompaniesPage = () => {
             companies.map((item, index) => {
               return (
                 <div key={index}>
-                  <a onClick={()=>companiesDeatilePage(item)}>
+                  <div className="cursor-pointer" onClick={()=>companiesDeatilePage(item)}>
                     <CompanyCard
                       Name={item.name}
                       Category={item.category}
                       Location={item.country}
                       ProductsCount={item.productsCount}
                     />
-                  </a>
+                  </div>
                 </div>
               );
             })}

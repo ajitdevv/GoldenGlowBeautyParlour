@@ -3,6 +3,7 @@ import { Getmanufacturers } from "../apis/product";
 import { ContactCard } from "../components/ContactCard";
 import AccountBar from "../componentpreant/AccountBar";
 import HeadingSubheading from "../components/HeadingSubheading";
+import { useNavigate } from "react-router-dom";
 
 const ContactsPage = () => {
   let [Manufacturedata, setManufacturedata] = useState([]);
@@ -10,6 +11,7 @@ const ContactsPage = () => {
   let [error, seterror] = useState(null);
   let [filterby, setfilterby] = useState("Normal");
 
+  const navgation = useNavigate();
   useEffect(() => {
     const FetchData = async () => {
       try {
@@ -28,7 +30,7 @@ const ContactsPage = () => {
     FetchData();
   }, []);
 
-  const sortdata = Manufacturedata.sort((a, b) => {
+  const sortdata = [...Manufacturedata].sort((a, b) => {
     switch (filterby) {
       case "Normal":
         return a.id - b.id;
@@ -51,7 +53,9 @@ const ContactsPage = () => {
         break;
     }
   });
-
+  const handeldatilecard = (item) => {
+    navgation(`/admin/companies/details/${item.id}`);
+  };
   console.log(sortdata);
 
   return (
@@ -117,7 +121,11 @@ const ContactsPage = () => {
           sortdata.length > 0 &&
           sortdata.map((item) => {
             return (
-              <div key={item.id}>
+              <div
+                key={item.id}
+                className="cursor-pointer"
+                onClick={() => handeldatilecard(item)}
+              >
                 <ContactCard
                   position={item.contact.position}
                   Company={item.name}
@@ -136,3 +144,4 @@ const ContactsPage = () => {
 };
 
 export default ContactsPage;
+

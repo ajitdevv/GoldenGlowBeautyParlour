@@ -97,7 +97,7 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <div className="flex gap-2 items-center hover:translate-x-8 transition-transform duration-300 hover:scale-110">
+                <div className="flex gap-2 items-center hover:translate-x-8 transition-transform duration-200 hover:scale-110">
                   <div>{item.logo}</div>
                   <h1 className="text-sm">{item.name}</h1>
                 </div>
