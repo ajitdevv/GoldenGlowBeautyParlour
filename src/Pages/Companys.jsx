@@ -44,7 +44,7 @@ const CompaniesPage = () => {
           h1={"companies"}
           h2={"Manage your company relationships"}
         />
-        <button className="px-3 font-medium py-2  h-fit whitespace-nowrap w-fit bg-primary/50 hover:bg-primary/80 text-foreground rounded-xl transition-all duration-300 cursor-pointer ">
+        <button className="px-3 font-medium py-2  h-fit whitespace-nowrap w-fit bg-primary/70 hover:bg-primary/85 text-foreground rounded-xl transition-all duration-300 cursor-pointer ">
           <span className="text-xl">+</span> Add companies
         </button>
       </div>

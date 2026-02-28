@@ -92,7 +92,7 @@ const Sidebar = () => {
                 className={({ isActive }) =>
                   `w-full text-left text-sm font-medium transition-colors ${
                     isActive
-                      ? "text-foreground  "
+                      ? "text-foreground"
                       : "text-muted hover:text-foreground"
                   }`
                 }
