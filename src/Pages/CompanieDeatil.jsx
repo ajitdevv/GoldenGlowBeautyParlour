@@ -12,7 +12,7 @@ const CompaniesDetails = () => {
       setloader(true);
       try {
         seterror(null);
-        let data = await Getmanufacturers();
+        let data = await Getmanufacturers(id);
         setmanufacturers(data);
       } catch (error) {
         console.log("Data not found", error);
@@ -22,10 +22,9 @@ const CompaniesDetails = () => {
       }
     };
     FatchData();
-  }, []);
+  }, [id]);
 
   const manufacturer = manufacturers.find((item) => item.id === Number(id));
-  console.log(manufacturer);
   const getInitials = (manufacturer) => {
     return manufacturer.name
       ?.split(" ")
@@ -42,18 +41,15 @@ const CompaniesDetails = () => {
     bg-white/10 backdrop-blur-xl border border-white/20 
     animate-pulse"
         >
-          {/* Top Section */}
           <div className="flex justify-between items-start">
             <div className="space-y-4 w-1/2">
               <div className="h-9 w-40 bg-white/30 rounded-lg"></div>
               <div className="h-4 w-32 bg-white/20 rounded"></div>
-
               <div className="flex gap-4 mt-4">
                 <div className="h-8 w-25 bg-white/20 rounded-full"></div>
                 <div className="h-8 w-25 bg-white/20 rounded-full"></div>
               </div>
             </div>
-
             <div className="flex gap-4">
               <div className="h-10 w-15 bg-white/20 rounded-xl"></div>
               <div className="h-10 w-18 bg-yellow-300/40 rounded-xl"></div>
@@ -62,7 +58,6 @@ const CompaniesDetails = () => {
           <div className="my-8 h-px bg-white/20"></div>
           <div className="flex gap-10 items-center">
             <div className="size-25 bg-white/20 rounded-full"></div>
-
             <div className="space-y-4 w-1/2">
               <div className="h-8 w-48 bg-white/30 rounded"></div>
               <div className="h-6 w-32 bg-white/20 rounded"></div>
@@ -101,12 +96,11 @@ const CompaniesDetails = () => {
                 {manufacturer.category} • {manufacturer.country}
               </p>
             </div>
-
             <div className="flex gap-3">
               <button className="px-4 py-2 rounded-xl border border-border text-foreground) hover:bg-card-soft transition">
                 Edit
               </button>
-              <button className="px-4 py-2 rounded-xl bg-primary text-[var(--primary-foreground)] hover:opacity-90 transition">
+              <button className="px-4 py-2 rounded-xl bg-primary text-primary-foreground hover:opacity-80 transition">
                 Delete
               </button>
             </div>
@@ -114,29 +108,23 @@ const CompaniesDetails = () => {
           <div className="flex gap-4 mb-8">
             <div className="px-4 py-2 rounded-full bg-card text-sm">
               Products:
-              <span className="font-semibold">
-                {manufacturer.productsCount}
-              </span>
+              <span className="font-semibold"> {manufacturer.productsCount}</span>
             </div>
-
             <div className="px-4 py-2 rounded-full bg-card text-sm">
-              Since:{" "}
-              <span className="font-semibold ">
-                {manufacturer.contact.since.split("-")[0]}
+              Since:
+              <span className="font-semibold "> {manufacturer.contact.since.split("-")[0]}
               </span>
             </div>
           </div>
-
           <div className="border-t border-(--border) mb-6"></div>
           <div className="flex gap-6 items-center">
             <div className="w-24 h-24 rounded-full bg-card flex items-center justify-center text-2xl font-bold text-[var(--accent)] shadow-md">
-              {getInitials(manufacturer.contact.personName)}
+              {getInitials(manufacturer?.contact?.personName)}
             </div>
-
             {/* Contact Info */}
             <div className="flex-1 space-y-2">
               <h2 className="text-xl font-semibold text-foreground">
-                {manufacturer.contact.personName}
+                {manufacturer?.contact?.personName}
               </h2>
               <p className="text-foreground">{manufacturer.contact.position}</p>
 
@@ -147,7 +135,6 @@ const CompaniesDetails = () => {
               </div>
             </div>
           </div>
-
           <div className="border-t border-border my-6"></div>
           <div className="flex justify-between text-sm text-foreground">
             <div>Relationship Since: {manufacturer.contact.since}</div>

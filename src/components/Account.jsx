@@ -16,8 +16,9 @@ const Account = () => {
           Account
         </h1>
         <ChevronDown
-          className="transition-transform duration-300 group-hover:rotate-180 group-hover:text-muted"
+          className="transition-transform duration-300 group-hover:-rotate-180 group-hover:text-muted"
           size={18}
+          
         />
       </div>
       <div
