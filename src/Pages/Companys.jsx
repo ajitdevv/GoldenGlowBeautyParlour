@@ -64,7 +64,7 @@ const CompaniesPage = () => {
             Array.from({ length: 26 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-6 animate-pulse"
+                className="bg-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 animate-pulse"
               >
                 <div className="h-6 w-1/2 bg-gray-400/30 rounded mb-4"></div>
                 <div className="h-4 w-3/4 bg-gray-400/20 rounded mb-2"></div>

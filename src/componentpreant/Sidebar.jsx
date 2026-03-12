@@ -36,7 +36,7 @@ const Sidebar = () => {
       id: "4",
       logo: <LucidePencilLine size={17} />,
       name: "Deals",
-      path: "/deals",
+      path: "/admin/deals",
     },
     {
       id: "5",

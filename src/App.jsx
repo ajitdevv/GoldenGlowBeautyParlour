@@ -6,6 +6,7 @@ import AdminLayout from "./routes/AdminLayout";
 import ContactsPage from "./Pages/Contacts";
 import CompaniesPage from "./Pages/Companys";
 import CompaniesDetails from "./Pages/CompanieDeatil";
+import Deals from "./Pages/Deals";
 function App() {
   return (
     <Routes>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/admin/contact" element={<ContactsPage />} />
         <Route path="/admin/companys" element={<CompaniesPage />} />
         <Route path="/admin/companies/details/:id" element={<CompaniesDetails />} />
+        <Route path="/admin/deals" element={<Deals />} />
       </Route>
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
