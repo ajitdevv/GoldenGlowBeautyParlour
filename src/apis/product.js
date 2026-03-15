@@ -28,8 +28,8 @@ export const Getmanufacturers = async () => {
 }
 export const GetDeals = async () => {
     try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.app/get-deals", { method: "POST", headers: { "Content-type": "application/josn", "Authorization": `Bearer ${token}`, }, body: JSON.stringify({ token }) })
+         const token = localStorage.getItem("token");
+        const response = await fetch("https://admin-apis.vercel.app/get-deals", { method: "POST", headers: { "Content-Type": "application/json"}, body: JSON.stringify({"token": token }) })
         if (!response.ok) {
             throw new Error("Failed to post deals")
         }
