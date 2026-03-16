@@ -15,6 +15,7 @@
 
   --color-border: var(--border);
   --color-shadow: var(--shadow);
+  --color-danger: var(--danger);
 }
 
 @layer base {
@@ -33,6 +34,7 @@
     --accent: #8A6A2B;
 
     --border: #EFEFEF;
+    --danger: #fd2929;
     --shadow:0 4px 6px rgba(0,0,0,0.05),0 10px 15px rgba(0,0,0,0.08);
   }
 
@@ -70,6 +72,7 @@
     /* --shadow: 0px 8px 24px rgba(0, 0, 0, 0.4); */
     /* --shadow: 0 4px 20px rgba(243, 237, 237, 0.5),0 0 15px rgba(240, 244, 251, 0.3); */
     --shadow: 0 8px 25px rgba(51, 51, 51, 0.6),0 0 20px rgba(64, 75, 94, 0.12);
+    --danger: #fd2929;
   }
 
 
