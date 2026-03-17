@@ -62,7 +62,7 @@ const AddDealFrom = () => {
         />
         <select name="status" value={addDeal.status}
           onChange={handleChange} className="border p-2">
-          <option value="">Select Status</option>
+          <option disabled>Select Status</option>
           <option value="Active">Active</option>
           <option value="Pending">Pending</option>
           <option value="Closed">Closed</option>

@@ -35,7 +35,7 @@
 
     --border: #EFEFEF;
     --danger: #fd2929;
-    --shadow:0 4px 6px rgba(0,0,0,0.05),0 10px 15px rgba(0,0,0,0.08);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.08);
   }
 
   /* Dark mode — safe & premium */
@@ -71,7 +71,7 @@
     /* Subtle charcoal border */
     /* --shadow: 0px 8px 24px rgba(0, 0, 0, 0.4); */
     /* --shadow: 0 4px 20px rgba(243, 237, 237, 0.5),0 0 15px rgba(240, 244, 251, 0.3); */
-    --shadow: 0 8px 25px rgba(51, 51, 51, 0.6),0 0 20px rgba(64, 75, 94, 0.12);
+    --shadow: 0 8px 25px rgba(51, 51, 51, 0.6), 0 0 20px rgba(64, 75, 94, 0.12);
     --danger: #fd2929;
   }
 
@@ -86,6 +86,32 @@
     -webkit-font-feature-settings: "rlig" 1, "calt" 1;
     -moz-font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+}
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+}
+
+.animate-slideIn {
+  animation: slideIn 0.4s ease;
 }
 
 @layer components {

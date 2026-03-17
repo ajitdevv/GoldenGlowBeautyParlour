@@ -8,6 +8,8 @@ import CompaniesPage from "./Pages/Companys";
 import CompaniesDetails from "./Pages/CompanieDeatil";
 import Deals from "./Pages/Deals";
 import AddDealFrom from "./components/AddDealFrom";
+import Setting from "./Pages/Setting";
+import AdminInfo from "./Pages/AdminInfo";
 function App() {
   return (
     <Routes>
@@ -25,7 +27,8 @@ function App() {
         <Route path="/admin/companies/details/:id" element={<CompaniesDetails />} />
         <Route path="/admin/deals" element={<Deals />} />
         <Route path="/admin/deals/add+new+deal" element={<AddDealFrom />} />
-        <Route path="/admin/setting" element={<AddDealFrom />} />
+        <Route path="/admin/setting" element={<Setting />} />
+        <Route path="/admin/admin+info" element={<AdminInfo />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/login" />} />

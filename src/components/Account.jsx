@@ -5,9 +5,12 @@ import { useNavigate } from "react-router-dom";
 const Account = () => {
   let user = JSON.parse(localStorage.getItem("user"));
   let nagation = useNavigate();
+  const handleUserInfo =()=>{
+    nagation("/admin/admin+info")
+  }
   return (
     <div className="relative group flex flex-col z-100 items-end p-5">
-      <div className="flex gap-1 items-center cursor-pointer">
+      <div onClick={handleUserInfo} className="flex gap-1 items-center cursor-pointer">
         <CircleUser
           className="transition-all duration-300 group-hover:text-muted"
           size={20}
