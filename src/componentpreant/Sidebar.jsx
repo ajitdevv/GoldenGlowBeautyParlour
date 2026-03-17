@@ -47,8 +47,8 @@ const Sidebar = () => {
     {
       id: "6",
       logo: <SettingsIcon size={17} />,
-      name: "Settings",
-      path: "/settings",
+      name: "Setting",
+      path: "/admin/setting",
     },
   ];
   const SocialMedia = [

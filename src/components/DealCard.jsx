@@ -2,16 +2,16 @@ import { User2Icon } from "lucide-react";
 
 const DealCard = ({ deal, getStatusColor }) => {
   return (
-    <div className="bg-background shadow-(-shadow) rounded-xl flex flex-col gap-1 w-full items-start p-5 border hover:shadow-(-shadow) transition">
+    <div className="bg-background shadow-(-shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
       <h2 className="text-md font-bold flex justify-start">{deal.title}</h2>
 
       <div className="flex w-full justify-between items-center">
-        <p className="text-muted gap-1 flex items-center">
-          <User2Icon />
+        <p className="text-muted text-sm gap-1 flex items-center">
+          <User2Icon size={15}/>
           {deal.companyName}
         </p>
 
-        <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm">
+        <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs">
           {deal.stage}
         </span>
       </div>

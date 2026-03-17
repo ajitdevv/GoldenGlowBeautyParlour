@@ -1,3 +1,4 @@
+
 export const getProducts = async () => {
     try {
         const token = localStorage.getItem("token");
@@ -28,8 +29,8 @@ export const Getmanufacturers = async () => {
 }
 export const GetDeals = async () => {
     try {
-         const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.app/get-deals", { method: "POST", headers: { "Content-Type": "application/json"}, body: JSON.stringify({"token": token }) })
+        const token = localStorage.getItem("token");
+        const response = await fetch("https://admin-apis.vercel.app/get-deals", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ "token": token }) })
         if (!response.ok) {
             throw new Error("Failed to post deals")
         }
@@ -37,5 +38,23 @@ export const GetDeals = async () => {
     } catch (error) {
         console.error("Error Post Deals:", error)
         throw error
+    }
+}
+export const AddDeal = async (dealData) => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("https://admin-apis.vercel.app/get-deals",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, }, body: JSON.stringify(dealData),
+            });
+        if (!response.ok) {
+            throw new Error("Failed to add deal")
+
+        }
+        return await response.json()
+    } catch (error) {
+        console.error("Error adding deal:", error);
+        throw error;
     }
 }

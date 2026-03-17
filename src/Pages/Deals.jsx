@@ -5,6 +5,7 @@ import HeadingSubheading from "../components/HeadingSubheading";
 import AccountBar from "../componentpreant/AccountBar";
 import { User2Icon } from "lucide-react";
 import DealCard from "../components/DealCard";
+import { useNavigate } from "react-router-dom";
 
 const Deals = () => {
   let [deals, setDeals] = useState([]);
@@ -40,6 +41,10 @@ const Deals = () => {
         return "bg-gray-400 text-black";
     }
   };
+  const Navgation=useNavigate()
+  const AddDeal=()=>{
+Navgation("/admin/deals/add+new+deal")
+  }
   return (
     <div className="flex-col gap-6 h-full flex w-full">
       <div className="w-full">
@@ -53,7 +58,7 @@ const Deals = () => {
           />
         </div>
         <div className="relative w-fit">
-          <AddButton children={"Add Deals"} onClick={console.log("hi")} />
+          <AddButton children={"Add Deals"} onClick={()=>AddDeal()} />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2">

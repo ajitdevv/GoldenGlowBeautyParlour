@@ -7,6 +7,7 @@ import ContactsPage from "./Pages/Contacts";
 import CompaniesPage from "./Pages/Companys";
 import CompaniesDetails from "./Pages/CompanieDeatil";
 import Deals from "./Pages/Deals";
+import AddDealFrom from "./components/AddDealFrom";
 function App() {
   return (
     <Routes>
@@ -23,7 +24,10 @@ function App() {
         <Route path="/admin/companys" element={<CompaniesPage />} />
         <Route path="/admin/companies/details/:id" element={<CompaniesDetails />} />
         <Route path="/admin/deals" element={<Deals />} />
+        <Route path="/admin/deals/add+new+deal" element={<AddDealFrom />} />
+        <Route path="/admin/setting" element={<AddDealFrom />} />
       </Route>
+
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
