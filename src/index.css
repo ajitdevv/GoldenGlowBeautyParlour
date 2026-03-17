@@ -24,7 +24,7 @@
   :root {
     --background: #ffffff;
     --card: #dcdbdb;
-    --card-soft: #eff3f4;
+    --card-soft: #eff0f1;
 
     --foreground: #1A1A1A;
     --muted: #666666;
@@ -33,7 +33,7 @@
     --primary-foreground: #000000;
     --accent: #8A6A2B;
 
-    --border: #EFEFEF;
+    --border: rgb(231, 231, 231);
     --danger: #fd2929;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.08);
   }

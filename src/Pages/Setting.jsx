@@ -13,11 +13,11 @@ const Setting = () => {
     }
   }, [theme]);
   const handleThemeChange = (e) => {
-   const selectedTheme= e.target.value
-   setTheme(selectedTheme)
+    const selectedTheme = e.target.value;
+    setTheme(selectedTheme);
     localStorage.setItem("theme", selectedTheme);
   };
- useEffect(() => {
+  useEffect(() => {
     if (theme === "dark") {
       localStorage.setItem("theme", "dark");
       document.documentElement.classList.add("dark");
@@ -138,11 +138,14 @@ const Setting = () => {
           </div>
         )}
       </div>
-      <div>
-        <select defaultValue={theme} name={theme} onChange={handleThemeChange} id="">
-          
-          <option value="dark">Dark</option>
-          <option value="light">Light</option>
+      <div className="px-1">
+        <select
+          value={theme}
+          onChange={handleThemeChange}
+          className=" w-full px-4 py-2 mb-5 rounded-lg border bg-card-soft  text-foreground border-(--border) focus:outline-none focus:ring-1 focus:ring-foreground cursor-pointer transition"
+        >
+          <option value="dark">🌙 Dark</option>
+          <option value="light">☀️ Light</option>
         </select>
       </div>
     </div>
