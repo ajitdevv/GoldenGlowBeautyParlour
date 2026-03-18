@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Getmanufacturers } from "../apis/product";
+import { deleteProduct, Getmanufacturers } from "../apis/product";
 
 const CompaniesDetails = () => {
   let [manufacturers, setmanufacturers] = useState([]);
@@ -32,7 +32,11 @@ const CompaniesDetails = () => {
       .join("")
       .toUpperCase();
   };
-
+  const handleDelete = async (id) => {
+    console.log(id);
+    await deleteProduct(id);
+    
+  };
   return (
     <div className="flex bg-[url('/Greadientdeatile.jpg')] bg-cover  w-full h-full justify-center items-center p-10 ">
       {loader && (
@@ -76,10 +80,12 @@ const CompaniesDetails = () => {
           </div>
         </div>
       )}
-      {!loader && error&&<div className="w-full h-full">
-        <h1 className="text-2xl text-foreground">{error}</h1>
-        </div>}
-      {!loader&& !error&& manufacturer &&(
+      {!loader && error && (
+        <div className="w-full h-full">
+          <h1 className="text-2xl text-foreground">{error}</h1>
+        </div>
+      )}
+      {!loader && !error && manufacturer && (
         <div
           className="w-full max-w-3xl rounded-3xl p-8 backdrop-blur-md transition-all duration-300 hover:backdrop-blur-xs border border-muted"
           style={{
@@ -100,7 +106,10 @@ const CompaniesDetails = () => {
               <button className="px-4 py-2 rounded-xl border border-border text-foreground) hover:bg-card-soft transition">
                 Edit
               </button>
-              <button className="px-4 py-2 rounded-xl bg-primary text-primary-foreground hover:opacity-80 transition">
+              <button
+                onClick={() => handleDelete(manufacturer.id)}
+                className="px-4 py-2 rounded-xl bg-primary text-primary-foreground hover:opacity-80 transition"
+              >
                 Delete
               </button>
             </div>
@@ -108,11 +117,16 @@ const CompaniesDetails = () => {
           <div className="flex gap-4 mb-8">
             <div className="px-4 py-2 rounded-full bg-card text-sm">
               Products:
-              <span className="font-semibold"> {manufacturer.productsCount}</span>
+              <span className="font-semibold">
+                {" "}
+                {manufacturer.productsCount}
+              </span>
             </div>
             <div className="px-4 py-2 rounded-full bg-card text-sm">
               Since:
-              <span className="font-semibold "> {manufacturer.contact.since.split("-")[0]}
+              <span className="font-semibold ">
+                {" "}
+                {manufacturer.contact.since.split("-")[0]}
               </span>
             </div>
           </div>
@@ -141,7 +155,7 @@ const CompaniesDetails = () => {
             <div>ID: #{manufacturer.id}</div>
           </div>
         </div>
-      ) }
+      )}
     </div>
   );
 };

@@ -59,7 +59,7 @@ const ContactsPage = () => {
   console.log(sortdata);
 
   return (
-    <div className="flex-col gap-6 h-full flex w-full">
+    <div className="flex-col gap-6 py-3 h-full flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>

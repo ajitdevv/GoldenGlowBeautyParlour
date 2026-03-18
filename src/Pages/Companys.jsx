@@ -35,7 +35,7 @@ const CompaniesPage = () => {
     console.log(item);
   };
   return (
-    <div>
+    <div className="py-3">
       <div>
         <AccountBar />
       </div>

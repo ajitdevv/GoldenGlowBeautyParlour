@@ -52,7 +52,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="flex-col gap-6 h-full flex w-full">
+    <div className="flex-col gap-6 py-3 h-full flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -64,7 +64,7 @@ const Setting = () => {
           />
         </div>
       </div>
-      <div className="min-h-screen w-full flex items-center justify-center bg-background py-6">
+      <div className="min-h-screen w-full flex items-center justify-center pr-2 bg-background py-6">
         <form
           onSubmit={handleSubmit}
           className="w-full bg-card-soft p-6 rounded-2xl shadow-(--color-shadow) border border-border flex flex-col gap-4"
@@ -138,7 +138,7 @@ const Setting = () => {
           </div>
         )}
       </div>
-      <div className="px-1">
+      <div className="pr-1">
         <select
           value={theme}
           onChange={handleThemeChange}

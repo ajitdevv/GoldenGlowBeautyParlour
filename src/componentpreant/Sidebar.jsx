@@ -9,6 +9,7 @@ import {
   Phone,
   ReceiptTextIcon,
   SettingsIcon,
+  X,
   YoutubeIcon,
 } from "lucide-react";
 import weblogo from "../assets/logoAj.png";
@@ -25,7 +26,12 @@ const Sidebar = () => {
       name: "Home",
       path: "/admin/dashboard",
     },
-    { id: "2", logo: <Phone size={17} />, name: "Contact", path: "/admin/contact" },
+    {
+      id: "2",
+      logo: <Phone size={17} />,
+      name: "Contact",
+      path: "/admin/contact",
+    },
     {
       id: "3",
       logo: <MapPinHouse size={17} />,
@@ -59,8 +65,13 @@ const Sidebar = () => {
   ];
   return (
     <div className="w-full flex flex-col  items-center bg-card-soft h-screen p-4 ">
+      <div className="w-full  flex items-center">
+        <div className="w-full">
+          <X size={25} />
+        </div>
+      </div>
       <div className="flex gap-3 justify-start items-center mt-7">
-        <div className="size-9 ">
+        <div className="size-8 ">
           <img src={weblogo} alt={weblogo} />
         </div>
         <div>
