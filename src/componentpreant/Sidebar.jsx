@@ -18,7 +18,7 @@ import Themetoggle from "../components/Themetoggle";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Topbar from "./Topbar";
-const Sidebar = ({manuopen}) => {
+const Sidebar = ({manuopen, setManuopen}) => {
   let [selectedItem, setSelectedItem] = useState("Companys");
   let navigate = useNavigate();
   const ManuItems = [
@@ -65,8 +65,6 @@ const Sidebar = ({manuopen}) => {
     { id: "3", logo: <Linkedin size={17} /> },
     { id: "4", logo: <GithubIcon size={17} /> },
   ];
-console.log(manuopen);
-
   return (
     <div
       className={`
@@ -74,7 +72,7 @@ console.log(manuopen);
     transition-all duration-300 
     ${manuopen ? "left-0" : "-left-62"}
     md:left-0 md:static
-  `}
+  `} onClick={()=>setManuopen(!manuopen)}
     >
       <div className="flex gap-3 justify-start items-center mt-7">
         <div className="size-8 ">

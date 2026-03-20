@@ -64,7 +64,7 @@ const Setting = () => {
           />
         </div>
       </div>
-      <div className="min-h-screen w-full flex items-center justify-center pr-2 bg-background py-6">
+      <div className="h-fit w-full flex items-center justify-center pr-2 bg-background py-6">
         <form
           onSubmit={handleSubmit}
           className="w-full bg-card-soft p-6 rounded-2xl shadow-(--color-shadow) border border-border flex flex-col gap-4"

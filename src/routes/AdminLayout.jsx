@@ -4,16 +4,16 @@ import Sidebar from "../componentpreant/Sidebar";
 import Topbar from "../componentpreant/Topbar";
 
 const AdminLayout = () => {
-  let [manuopen, setManuopen] = useState(true);
+  let [manuopen, setManuopen] = useState(false);
   return (
     <>
       <Topbar setManuopen={setManuopen} manuopen={manuopen}/>
     <div className="flex h-screen overflow-hidden gap-5">
       <div className=" fixed z-100 shrink-0">
       
-        <Sidebar manuopen={manuopen}/>
+        <Sidebar manuopen={manuopen} setManuopen={setManuopen}/>
       </div>
-      <div className="flex-1 md:ml-[22.5%] bg-background overflow-y-auto  min-h-screen ">
+      <div className="flex-1 md:ml-[22.5%] bg-background overflow-y-auto  min-h-screen " onClick={()=>setManuopen(false)}>
         <Outlet />
       </div>
     </div></>

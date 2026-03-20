@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import { Getmanufacturers } from "../apis/product";
 import { ContactCard } from "../components/ContactCard";
 import AccountBar from "../componentpreant/AccountBar";
 import HeadingSubheading from "../components/HeadingSubheading";
 import { useNavigate } from "react-router-dom";
+import { RetryButton } from "../components/Button";
 
 const ContactsPage = () => {
   let [Manufacturedata, setManufacturedata] = useState([]);
@@ -30,6 +31,9 @@ const ContactsPage = () => {
     FetchData();
   }, []);
 
+  const handleRetryClick = () => {
+    console.log("click work ");
+  };
   const sortdata = [...Manufacturedata].sort((a, b) => {
     switch (filterby) {
       case "Normal":
@@ -56,10 +60,8 @@ const ContactsPage = () => {
   const handeldatilecard = (item) => {
     navgation(`/admin/companies/details/${item.id}`);
   };
-  console.log(sortdata);
-
   return (
-    <div className="flex-col gap-6 py-3 h-full flex w-full">
+    <div className="flex-col gap-6 px-2 py-3 h-full flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -114,27 +116,33 @@ const ContactsPage = () => {
             </div>
           ))}
         {!loading && error && (
-          <div className="col-span-full text-center text-red-400">{error}</div>
+          <div className="col-span-full text-center text-red-400">
+            <div>{error}</div>
+            <div>
+              <RetryButton onClick={handleRetryClick()} children={"Retry"} />
+            </div>
+          </div>
         )}
         {!loading &&
           !error &&
           sortdata.length > 0 &&
           sortdata.map((item) => {
             return (
-              <div
-                key={item.id}
-                className="cursor-pointer"
-                onClick={() => handeldatilecard(item)}
-              >
-                <ContactCard
-                  position={item.contact.position}
-                  Company={item.name}
-                  Name={item.contact.personName}
-                  Gmail={item.contact.email}
-                  contactDate={item.contact.contactDate}
-                  phoneNo={item.contact.phone}
-                  since={item.contact.since}
-                />
+              <div key={item.id} className="">
+                <div
+                  className="cursor-pointer"
+                  onClick={() => handeldatilecard(item)}
+                >
+                  <ContactCard
+                    position={item.contact.position}
+                    Company={item.name}
+                    Name={item.contact.personName}
+                    Gmail={item.contact.email}
+                    contactDate={item.contact.contactDate}
+                    phoneNo={item.contact.phone}
+                    since={item.contact.since}
+                  />
+                </div>
               </div>
             );
           })}
@@ -144,4 +152,3 @@ const ContactsPage = () => {
 };
 
 export default ContactsPage;
-
