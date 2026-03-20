@@ -1,11 +1,12 @@
 
 export const getProducts = async () => {
     try {
-        const token = localStorage.getItem("token");
-
-        const response = await fetch("https://admin-apis.vercel.app/get-products", { method: "PATCH", headers: { "Content-type": "application/json", "Authorization": `Bearer ${token}`, }, body: JSON.stringify({ token }) });
+        const response = await fetch("http://localhost:3000/get-products", {
+            method: "GET", credentials: "include"
+        });
         if (!response.ok) {
-            throw new Error("Failed to fetch products");
+            const errText = await response.text();
+            throw new Error(errText || "Failed to fetch products");
         }
         return await response.json();
     } catch (error) {
@@ -17,7 +18,7 @@ export const getProducts = async () => {
 export const deleteProduct = async (id) => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.app/delete-manufacturer", {
+        const response = await fetch("http://localhost:3000/delete-manufacturer", {
             method: "DELETE",
             headers: { "Content-Type": "application/json", },
             body: JSON.stringify({
@@ -42,10 +43,14 @@ export const deleteProduct = async (id) => {
 
 export const Getmanufacturers = async () => {
     try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.app/get-manufacturers", { method: "PATCH", headers: { "Content-type": "application/json", "Authorization": `Bearer ${token}`, }, body: JSON.stringify({ token }) });
+        const response = await fetch("http://localhost:3000/get-manufacturers", {
+            method: "GET", credentials: "include", headers: {
+                "Content-Type": "application/json"
+            }
+        });
         if (!response.ok) {
-            throw new Error("Failed to fetch manufacturers");
+            const errText = await response.text();
+            throw new Error(errText || "Failed to fetch Manufacturers");
         }
         return await response.json();
     } catch (error) {
@@ -56,7 +61,9 @@ export const Getmanufacturers = async () => {
 export const GetDeals = async () => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.app/get-deals", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ "token": token }) })
+        const response = await fetch("http://localhost:3000/get-deals", { method: "GET",  credentials: "include", headers: {
+                "Content-Type": "application/json"
+            }})
         if (!response.ok) {
             throw new Error("Failed to post deals")
         }
@@ -69,7 +76,7 @@ export const GetDeals = async () => {
 export const AddDeal = async (dealData) => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.app/get-deals",
+        const response = await fetch("http://localhost:3000/get-deals",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, }, body: JSON.stringify(dealData),

@@ -17,7 +17,7 @@ const Deals = () => {
         setLoader(true);
         setError(false);
         const data = await GetDeals();
-        setDeals(data);
+        setDeals(data.data);
       } catch (error) {
         setError(true);
         console.log("Error loading companies", error);

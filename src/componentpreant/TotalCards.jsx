@@ -31,7 +31,7 @@ const TotalCards = ( {productdata ,manufacturers}) => {
     },
   ];
   return (
-    <div className="flex justify-between gap-4 ">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between gap-3">
       {Carddata.map((card, index) => (
         <HomeCard
           key={index}

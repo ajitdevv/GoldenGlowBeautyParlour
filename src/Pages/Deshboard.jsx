@@ -12,25 +12,64 @@ const Deshboard = () => {
   let [manufacturers, setmanufacturers] = useState([]);
   let [loading, setloading] = useState(true);
   let [err, seterr] = useState(null);
-  useEffect(() => {
-    const FatchData = async () => {
+  // useEffect(() => {
+  //   const FatchData = async () => {
+  //     try {
+  //       setloading(true);
+  //       const [productdata, manufacturedata] = await Promise.all([
+  //         getProducts(),
+  //         Getmanufacturers(),
+  //       ]);
+  //       console.log(productdata);
+  //       console.log(manufacturedata);
+        
+  //       setproductdata(productdata);
+  //       setmanufacturers(manufacturedata);
+  //     } catch (error) {
+  //       console.log("Error to Find Product and Manufacture", error);
+  //       seterr("Data not Found");
+  //     } finally {
+  //       setloading(false);
+  //     }
+  //   };
+  //   FatchData();
+  // }, []);
+  useEffect(()=>{
+    const FetchData=async()=>{
       try {
-        setloading(true);
-        const [productdata, manufacturedata] = await Promise.all([
-          getProducts(),
-          Getmanufacturers(),
-        ]);
-        setproductdata(productdata);
-        setmanufacturers(manufacturedata);
+         setloading(true);
+        seterr(null);
+         const data = await getProducts();
+                setproductdata(data.data);
       } catch (error) {
-        console.log("Error to Find Product and Manufacture", error);
-        seterr("Data not Found");
-      } finally {
+         console.log("Error Lodaing product", error);
+        seterr("Failed to load product");
+      }finally{
         setloading(false);
       }
-    };
-    FatchData();
-  }, []);
+    }
+     FetchData();
+  },[])
+  useEffect(()=>{
+    const FetchData=async()=>{
+      try {
+         setloading(true);
+        seterr(null);
+         const data = await Getmanufacturers();
+                setmanufacturers(data.data);
+      } catch (error) {
+         console.log("Error Lodaing manufacture", error);
+        seterr("Failed to load manufacture");
+      }finally{
+        setloading(false);
+      }
+    }
+     FetchData();
+  },[])
+
+
+  console.log(productdata,manufacturers);
+  
 
   let navigation = useNavigate();
   let handellogout = () => {
@@ -39,7 +78,7 @@ const Deshboard = () => {
     navigation("/login");
   };
   return (
-    <div className=" flex flex-col gap-6 py-3">
+    <div className=" flex flex-col gap-6 py-3 px-2">
       <div>
         <AccountBar />
       </div>
@@ -65,7 +104,7 @@ const Deshboard = () => {
       )}
       {productdata.length > 0 && manufacturers.length > 0 && (
         <>
-          <div>
+          <div className="">
             <TotalCards
               productdata={productdata}
               manufacturers={manufacturers}

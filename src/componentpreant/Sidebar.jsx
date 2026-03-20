@@ -1,5 +1,6 @@
 import {
   GithubIcon,
+  Hamburger,
   HomeIcon,
   InstagramIcon,
   Linkedin,
@@ -16,7 +17,8 @@ import weblogo from "../assets/logoAj.png";
 import Themetoggle from "../components/Themetoggle";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-const Sidebar = () => {
+import Topbar from "./Topbar";
+const Sidebar = ({manuopen}) => {
   let [selectedItem, setSelectedItem] = useState("Companys");
   let navigate = useNavigate();
   const ManuItems = [
@@ -63,13 +65,17 @@ const Sidebar = () => {
     { id: "3", logo: <Linkedin size={17} /> },
     { id: "4", logo: <GithubIcon size={17} /> },
   ];
+console.log(manuopen);
+
   return (
-    <div className="w-full flex flex-col  items-center bg-card-soft h-screen p-4 ">
-      <div className="w-full  flex items-center">
-        <div className="w-full">
-          <X size={25} />
-        </div>
-      </div>
+    <div
+      className={`
+    fixed flex w-62 flex-col items-center bg-card-soft h-screen p-4
+    transition-all duration-300 
+    ${manuopen ? "left-0" : "-left-62"}
+    md:left-0 md:static
+  `}
+    >
       <div className="flex gap-3 justify-start items-center mt-7">
         <div className="size-8 ">
           <img src={weblogo} alt={weblogo} />

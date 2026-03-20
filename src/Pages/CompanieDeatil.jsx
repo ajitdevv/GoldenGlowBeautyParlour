@@ -13,7 +13,7 @@ const CompaniesDetails = () => {
       try {
         seterror(null);
         let data = await Getmanufacturers(id);
-        setmanufacturers(data);
+        setmanufacturers(data.data);
       } catch (error) {
         console.log("Data not found", error);
         seterror("data not found plz try again");

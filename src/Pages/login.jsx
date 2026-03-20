@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   let [show, setshow] = useState(false);
+  let [checkBox, setCheckBox] = useState(false);
   let [username, setusername] = useState("");
   let [password, setpassword] = useState("");
+
   let navigation = useNavigate();
   const handelSubmit = () => {
     const payload = {
@@ -14,7 +16,7 @@ export const Login = () => {
       password: password,
     };
     axios
-      .post("https://admin-apis.vercel.app/login", payload)
+      .post("http://localhost:3000/login", payload, { withCredentials: true })
       .then((res) => {
         const data = res.data;
         localStorage.setItem("token", data.token);
@@ -35,7 +37,7 @@ export const Login = () => {
   };
   return (
     <div className="w-full h-screen bg-background flex flex-col justify-center items-center">
-      <div className="bg-background px-12 py-8 w-[33%] flex flex-col gap-4 rounded-4xl shadow-(--shadow)">
+      <div className="bg-background px-12 py-8 w-[90%] md:w-[33%] flex flex-col gap-4 rounded-4xl shadow-(--shadow)">
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-3xl">Sign in</h1>
           <h2 className="text-sm text-muted">
@@ -74,12 +76,34 @@ export const Login = () => {
               </button>
             </div>
           </div>
-          <div>
+
+          <div
+            className={`transition-all duration-300 
+  ${checkBox ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"}`}
+          >
+            <h1 className="font-bold text-sm w-full flex items-start text-foreground">
+              Re-enter Password
+            </h1>
+
+            <input
+              type="text"
+              onChange={(e) => setpassword(e.target.value)}
+              className="bg-card w-full rounded-lg p-2 shadow-md"
+            />
+          </div>
+          <div
+            className={`transition-all duration-500  ${checkBox ? "translate-y-0 " : "-translate-y-20 "}`}
+          >
             <label
               htmlFor="remember-me"
               className="text-sm flex gap-2 items-center justify-start"
             >
-              <input type="checkbox" id="remember-me" className="ml-2" />
+              <input
+                type="checkbox"
+                onClick={() => setCheckBox(!checkBox)}
+                id="remember-me"
+                className="ml-2"
+              />
               <div className="font-bold text-muted"> Remember me</div>
             </label>
           </div>
@@ -88,10 +112,8 @@ export const Login = () => {
         <button
           onClick={handelSubmit}
           className={`bg-foreground font-bold text-background w-full rounded-lg p-2 mt-2 transform-transition duration-500 ${
-            !username.trim() || !password.trim()
-              ? "bg-muted text-muted cursor-not-allowed"
-              : "bg-foreground text-background  cursor-pointer"
-          }`}
+            !username.trim() || !password.trim() ? "bg-muted text-background cursor-not-allowed" : "bg-foreground text-background  cursor-pointer"
+          } transition-all duration-300  ${checkBox ? "translate-y-0 " : "-translate-y-20 "}`}
         >
           Sign in
         </button>

@@ -10,15 +10,13 @@ const CompaniesPage = () => {
   let [loader, setloader] = useState(true);
   let [error, setError] = useState(null);
   let [companyname, setcompanyname] = useState(null);
-  console.log(companyname);
-
   useEffect(() => {
     const FetchData = async () => {
       try {
         setloader(true);
         setError(null);
         const data = await Getmanufacturers();
-        setcompanys(data);
+        setcompanys(data.data);
       } catch (error) {
         console.log("Error loading companies", error);
         setError("Failed to load companies");
@@ -83,7 +81,10 @@ const CompaniesPage = () => {
             companies.map((item, index) => {
               return (
                 <div key={index}>
-                  <div className="cursor-pointer" onClick={()=>companiesDeatilePage(item)}>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => companiesDeatilePage(item)}
+                  >
                     <CompanyCard
                       Name={item.name}
                       Category={item.category}

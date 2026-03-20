@@ -18,7 +18,7 @@ const ContactsPage = () => {
         setloading(true);
         seterror(null);
         const data = await Getmanufacturers();
-        setManufacturedata(data);
+        setManufacturedata(data.data);
       } catch (error) {
         console.log("Error Lodaing Manufacturedata", error);
         seterror("Failed to load Manufacture");
