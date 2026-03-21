@@ -61,21 +61,22 @@ export const Getmanufacturers = async () => {
 export const GetDeals = async () => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3000/get-deals", { method: "GET",  credentials: "include", headers: {
+        const response = await fetch("http://localhost:3000/get-deals", {
+            method: "GET", credentials: "include", headers: {
                 "Content-Type": "application/json"
-            }})
+            }
+        })
         if (!response.ok) {
-            throw new Error("Failed to post deals")
+            throw new Error("Failed to get deals")
         }
         return await response.json();
     } catch (error) {
-        console.error("Error Post Deals:", error)
+        console.error("Error Get Deals:", error)
         throw error
     }
 }
 export const AddDeal = async (dealData) => {
     try {
-        const token = localStorage.getItem("token");
         const response = await fetch("http://localhost:3000/get-deals",
             {
                 method: "POST",
@@ -89,5 +90,21 @@ export const AddDeal = async (dealData) => {
     } catch (error) {
         console.error("Error adding deal:", error);
         throw error;
+    }
+}
+
+export const GetReports = async () => {
+    try {
+        const response = await fatch("http://localhost:3000get-reports", {
+            method: "GET", credentials: "include", headers: { "Content-Type": "application/json" }
+        })
+        if (!response.ok) {
+            throw new Error("Faild to get Reports")
+        }
+        return await response.json()
+    } catch (error) {
+        console.log("Error Get Reports", error);
+        throw error
+
     }
 }

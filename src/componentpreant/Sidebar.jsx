@@ -50,7 +50,7 @@ const Sidebar = ({manuopen, setManuopen}) => {
       id: "5",
       logo: <ReceiptTextIcon size={17} />,
       name: "Reports",
-      path: "/reports",
+      path: "/admin/reports",
     },
     {
       id: "6",

@@ -42,8 +42,8 @@ const CompaniesPage = () => {
           h1={"companies"}
           h2={"Manage your company relationships"}
         />
-        <button className="px-3 font-medium py-2  h-fit whitespace-nowrap w-fit bg-primary/70 hover:bg-primary/85 text-foreground rounded-xl transition-all duration-300 cursor-pointer ">
-          <span className="text-xl">+</span> Add companies
+        <button  className="px-3 font-medium py-2  h-fit whitespace-nowrap w-fit bg-primary/70 hover:bg-primary/85 text-foreground rounded-xl transition-all duration-300 cursor-pointer ">
+          <span className="text-xl">+</span> Add Companies
         </button>
       </div>
       <div className="relative h-full border-t-4 border-blue-200 rounded-2xl w-full overflow-hidden p-10">
