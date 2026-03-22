@@ -16,7 +16,7 @@ export const Login = () => {
       password: password,
     };
     axios
-      .post("http://localhost:3000/login", payload, { withCredentials: true })
+      .post("https://admin-apis.vercel.app/login", payload, { withCredentials: true })
       .then((res) => {
         const data = res.data;
         localStorage.setItem("token", data.token);

@@ -1,7 +1,7 @@
 
 export const getProducts = async () => {
     try {
-        const response = await fetch("http://localhost:3000/get-products", {
+        const response = await fetch("https://admin-apis.vercel.app/get-products", {
             method: "GET", credentials: "include"
         });
         if (!response.ok) {
@@ -18,7 +18,7 @@ export const getProducts = async () => {
 export const deleteProduct = async (id) => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3000/delete-manufacturer", {
+        const response = await fetch("https://admin-apis.vercel.apprcel.app/delete-manufacturer", {
             method: "DELETE",
             headers: { "Content-Type": "application/json", },
             body: JSON.stringify({
@@ -43,7 +43,7 @@ export const deleteProduct = async (id) => {
 
 export const Getmanufacturers = async () => {
     try {
-        const response = await fetch("http://localhost:3000/get-manufacturers", {
+        const response = await fetch("https://admin-apis.vercel.app/get-manufacturers", {
             method: "GET", credentials: "include", headers: {
                 "Content-Type": "application/json"
             }
@@ -61,7 +61,7 @@ export const Getmanufacturers = async () => {
 export const GetDeals = async () => {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3000/get-deals", {
+        const response = await fetch("https://admin-apis.vercel.app/get-deals", {
             method: "GET", credentials: "include", headers: {
                 "Content-Type": "application/json"
             }
@@ -77,7 +77,7 @@ export const GetDeals = async () => {
 }
 export const AddDeal = async (dealData) => {
     try {
-        const response = await fetch("http://localhost:3000/get-deals",
+        const response = await fetch("https://admin-apis.vercel.app/get-deals",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, }, body: JSON.stringify(dealData),
@@ -95,7 +95,7 @@ export const AddDeal = async (dealData) => {
 
 export const GetReports = async () => {
     try {
-        const response = await fatch("http://localhost:3000get-reports", {
+        const response = await fetch("https://admin-apis.vercel.app/get-reports", {
             method: "GET", credentials: "include", headers: { "Content-Type": "application/json" }
         })
         if (!response.ok) {
