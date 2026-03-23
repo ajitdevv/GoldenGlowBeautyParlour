@@ -11,6 +11,7 @@ import AddDealFrom from "./components/AddDealFrom";
 import Setting from "./Pages/Setting";
 import AdminInfo from "./Pages/AdminInfo";
 import Reports from "./Pages/Reports";
+import ReportFullView from "./Pages/ReportFullView";
 function App() {
   return (
     <Routes>
@@ -29,6 +30,7 @@ function App() {
         <Route path="/admin/deals" element={<Deals />} />
         <Route path="/admin/deals/add+new+deal" element={<AddDealFrom />} />
         <Route path="/admin/reports" element={<Reports />} />
+        <Route path="/admin/report/:_id" element={<ReportFullView />} />
         <Route path="/admin/setting" element={<Setting />} />
         <Route path="/admin/admin+info" element={<AdminInfo />} />
       </Route>
