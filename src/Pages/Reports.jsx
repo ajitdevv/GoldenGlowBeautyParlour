@@ -16,7 +16,7 @@ const Reports = () => {
     priority: "",
     username: "",
   });
-  let navigate =useNavigate()
+  let navigate = useNavigate();
   useEffect(() => {
     const fetchReports = async () => {
       try {
@@ -55,7 +55,7 @@ const Reports = () => {
     setAppliedFilter(filter);
   };
   const handleReset = () => {
-    setAppliedFilter(null)
+    setAppliedFilter(null);
     setFilter({
       type: "",
       status: "",
@@ -63,13 +63,12 @@ const Reports = () => {
       username: "",
     });
   };
-  const handleFullView=(item)=>{
-navigate (`/admin/report/${item._id}`)
-
-  }
+  const handleFullView = (item) => {
+    navigate(`/admin/report/${item._id}`);
+  };
 
   return (
-    <div >
+    <div>
       <div>
         <AccountBar />
       </div>
@@ -155,7 +154,11 @@ navigate (`/admin/report/${item._id}`)
 
             <tbody className="">
               {FilterReports.map((item) => (
-                <tr  onClick={()=>handleFullView(item)} key={item._id} className="border-t hover:bg-card-soft cursor-pointer scale-100 hover:scale-101 transition-all duration-300">
+                <tr
+                  onClick={() => handleFullView(item)}
+                  key={item._id}
+                  className="border-t hover:bg-card-soft cursor-pointer scale-100 hover:scale-101 transition-all duration-300"
+                >
                   <td className="px-2 py-2.5">
                     <div className="bg-foreground text-background rounded-sm w-fit px-2 py-0.5">
                       {item.reportId}
