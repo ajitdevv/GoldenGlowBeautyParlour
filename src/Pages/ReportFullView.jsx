@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetReports } from "../apis/product";
 import { Tag } from "lucide-react";
-import { ReportUpdate } from "../apis/dataUpdate";
+import { ReportUpdate } from "../apis/updatedata";
 
 const ReportFullView = () => {
   let [loading, setLoading] = useState(true);
@@ -63,9 +63,70 @@ const ReportFullView = () => {
         description: SelectedReport.description || "",
       });
     }
-  }, [SelectedReport]);return(
+  }, [SelectedReport]);
+  return (
     <div>
-      {loading && <div className="bg-amber-300 text-black">loding...</div>}
+      {loading && (
+        <div className="space-y-6 mt-8 animate-pulse">
+          <div className="bg-white rounded-2xl shadow p-5 space-y-4">
+            <div className="h-6 bg-gray-300 rounded w-1/2"></div>
+
+            <div className="flex gap-3">
+              <div className="h-7 w-20 bg-gray-300 rounded-full"></div>
+              <div className="h-7 w-16 bg-gray-300 rounded-full"></div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-white rounded-2xl shadow p-5 space-y-4">
+                <div className="h-5 bg-gray-300 rounded w-40"></div>
+
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-32 bg-gray-300 rounded"></div>
+                    <div className="h-3 w-40 bg-gray-300 rounded"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl shadow p-5 space-y-4">
+                <div className="h-5 bg-gray-300 rounded w-48"></div>
+
+                <div className="space-y-2">
+                  <div className="h-4 w-32 bg-gray-300 rounded"></div>
+                  <div className="h-4 w-40 bg-gray-300 rounded"></div>
+                </div>
+
+                <div className="space-y-2 mt-4">
+                  <div className="h-4 w-28 bg-gray-300 rounded"></div>
+                  <div className="h-4 w-full bg-gray-300 rounded"></div>
+                  <div className="h-4 w-5/6 bg-gray-300 rounded"></div>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl shadow p-5 space-y-4">
+                <div className="h-5 bg-gray-300 rounded w-32 mx-auto"></div>
+                <div className="h-32 bg-gray-300 rounded-lg"></div>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl shadow p-5 space-y-6">
+              <div className="h-5 bg-gray-300 rounded w-40"></div>
+              <div className="space-y-2">
+                <div className="h-4 w-20 bg-gray-300 rounded"></div>
+                <div className="h-10 bg-gray-300 rounded-xl"></div>
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 w-20 bg-gray-300 rounded"></div>
+                <div className="h-10 bg-gray-300 rounded-xl"></div>
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 w-32 bg-gray-300 rounded"></div>
+                <div className="h-24 bg-gray-300 rounded-xl"></div>
+              </div>
+              <div className="h-12 bg-gray-300 rounded-xl"></div>
+            </div>
+          </div>
+        </div>
+      )}
       {!loading && error && (
         <div className="bg-red-300 text-black">
           {error}
@@ -76,7 +137,6 @@ const ReportFullView = () => {
       )}
       {!loading && !error && SelectedReport && (
         <div>
-          {/* {SelectedReport.map((item) => { */}
           <div className="p-6 bg-card/50 min-h-screen">
             <div className="bg-card-soft rounded-md shadow p-5 mb-6 flex flex-col items-start gap-2">
               <h1 className="text-lg font-semibold text-foreground">
@@ -96,7 +156,6 @@ const ReportFullView = () => {
                 </span>
               </div>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-6">
                 <div className="bg-card-soft p-5 rounded-xl shadow">
@@ -214,7 +273,6 @@ const ReportFullView = () => {
               </div>
             </div>
           </div>
-          {/* })} */}
         </div>
       )}
     </div>

@@ -60,7 +60,6 @@ export const Getmanufacturers = async () => {
 }
 export const GetDeals = async () => {
     try {
-        const token = localStorage.getItem("token");
         const response = await fetch("https://admin-apis.vercel.app/get-deals", {
             method: "GET", credentials: "include", headers: {
                 "Content-Type": "application/json"

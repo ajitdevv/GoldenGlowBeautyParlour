@@ -130,7 +130,49 @@ const Reports = () => {
           Remove All Filters
         </button>
       </div>
-      {loader && <div className="bg-amber-300 text-black">loding...</div>}
+      {loader && (
+        <>
+          {/* Header Skeleton */}
+          <tr className="animate-pulse w-full ">
+            <td className="px-4 py-3 w-full">
+              <div className="h-5 w-20 bg-gray-300 rounded"></div>
+            </td>
+            <td className="px-4 pr-80 w-full">
+              <div className="h-5 w-20 bg-gray-300 rounded"></div>
+            </td>
+            <td className="px-4 pr-10 w-full">
+              <div className="h-5 w-20 bg-gray-300 rounded"></div>
+            </td>
+            <td className="px-4 pr-10 w-full">
+              <div className="h-5 w-20 bg-gray-300 rounded"></div>
+            </td>
+            <td className="px-4 pr-10 w-full">
+              <div className="h-5 w-20 bg-gray-300 rounded"></div>
+            </td>
+          </tr>
+
+          {/* Rows */}
+          {Array.from({ length: 16 }).map((_, i) => (
+            <tr key={i} className="border-t animate-pulse w-full mr-20">
+              <td className="px-4 py-3 w-full">
+                <div className="h-8 w-20 bg-gray-300 rounded-md"></div>
+              </td>
+              <td className="px-4 py-3 w-full">
+                <div className="h-5 w-40 bg-gray-300 rounded-md"></div>
+              </td>
+              <td className="px-4 py-3 w-full">
+                <div className="h-5 w-24 bg-gray-300 rounded-md"></div>
+              </td>
+              <td className="px-4 py-3 w-full">
+                <div className="h-7 w-28 bg-gray-300 rounded-full"></div>
+              </td>
+              <td className="px-4 py-3 w-full">
+                <div className="h-7 w-20 bg-gray-300 rounded-full"></div>
+              </td>
+            </tr>
+          ))}
+        </>
+      )}
       {!loader && error && (
         <div className=" text-red-500 text-2xl">{error}</div>
       )}

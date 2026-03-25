@@ -20,7 +20,7 @@ const Deals = () => {
         setDeals(data.data);
       } catch (error) {
         setError(true);
-        console.log("Error loading companies", error);
+        console.log("Error loading Deals", error);
       } finally {
         setLoader(false);
       }
@@ -41,9 +41,12 @@ const Deals = () => {
         return "bg-gray-400 text-black";
     }
   };
-  const Navgation=useNavigate()
-  const AddDeal=()=>{
-Navgation("/admin/deals/add+new+deal")
+  const Navgation = useNavigate();
+  const AddDeal = () => {
+    Navgation("/admin/deals/add+new+deal");
+  };
+  const handleclick=(deal)=>{
+  Navgation(`/admin/deal/${deal._id}`)
   }
   return (
     <div className="flex-col gap-6 py-3 h-full flex w-full">
@@ -58,10 +61,48 @@ Navgation("/admin/deals/add+new+deal")
           />
         </div>
         <div className="relative w-fit">
-          <AddButton children={"Add Deals"} onClick={()=>AddDeal()} />
+          <AddButton children={"Add Deals"} onClick={() => AddDeal()} />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2">
+        {loader && (
+          <div className="w-full min-w-245 max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-2xl w-full h-full shadow border p-5 space-y-3 animate-pulse flex flex-col justify-between"
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="h-5 w-40 bg-gray-300 rounded"></div>
+                    <div className="h-5 w-20 bg-gray-300 rounded-full"></div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <div className="w-5 h-4 bg-gray-300 rounded-full"></div>
+                    <div className="h-3 w-24 bg-gray-300 rounded"></div>
+                  </div>
+
+                  <div className="h-px bg-gray-300"></div>
+
+                  <div className="flex justify-between items-center">
+                    <div className="h-3 w-24 bg-gray-300 rounded"></div>
+                    <div className="h-5 w-28 bg-gray-300 rounded"></div>
+                  </div>
+
+                  <div className="h-px bg-gray-300"></div>
+
+                  <div className="flex justify-between items-center">
+                    <div className="h-3 w-32 bg-gray-300 rounded"></div>
+                    <div className="h-6 w-20 bg-gray-300 rounded-full"></div>
+                  </div>
+
+                  <div className="h-3 w-40 bg-gray-300 rounded"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {!loader && error && (
           <div className="col-span-full text-center text-danger">{error}</div>
         )}
@@ -73,12 +114,16 @@ Navgation("/admin/deals/add+new+deal")
         {!loader &&
           !error &&
           deals.length > 0 &&
-          deals.map((deal, index) => {
-           return <DealCard
-              key={index}
-              deal={deal}
-              getStatusColor={getStatusColor}
-            />;
+          deals.map((deal) => {
+            return (
+              <div key={deal._id} onClick={()=>handleclick(deal)
+              } className="bg-background shadow-(-shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
+                <DealCard
+                  deal={deal}
+                  getStatusColor={getStatusColor}
+                />
+              </div>
+            );
           })}
       </div>
     </div>
