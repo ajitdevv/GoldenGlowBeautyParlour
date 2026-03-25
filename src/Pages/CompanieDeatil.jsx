@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { deleteProduct, Getmanufacturers } from "../apis/product";
+import { Getmanufacturers } from "../apis/product";
+import { deleteProduct } from "../apis/deletedata";
+import DesablePopUp from "../components/DesablePopUp";
 
 const CompaniesDetails = () => {
   let [manufacturers, setmanufacturers] = useState([]);
   let [error, seterror] = useState(null);
   let [loader, setloader] = useState(true);
+  let [popup, setPopUp] = useState(false);
   let { id } = useParams();
   useEffect(() => {
     const FatchData = async () => {
@@ -35,10 +38,16 @@ const CompaniesDetails = () => {
   const handleDelete = async (id) => {
     console.log(id);
     await deleteProduct(id);
-    
+  };
+  const handleEdit = async (manufacturer) => {
+    setPopUp(true);
+
+    setTimeout(() => {
+      setPopUp(false);
+    }, 3000);
   };
   return (
-    <div className="flex bg-[url('/Greadientdeatile.jpg')] bg-cover  w-full h-full justify-center items-center p-10 ">
+    <div className="flex relative bg-[url('/Greadientdeatile.jpg')] bg-cover  w-full h-full justify-center items-center p-10 ">
       {loader && (
         <div
           className="w-full h-full max-w-3xl rounded-3xl  p-8 
@@ -103,7 +112,10 @@ const CompaniesDetails = () => {
               </p>
             </div>
             <div className="flex gap-3">
-              <button className="px-4 py-2 rounded-xl border border-border text-foreground) hover:bg-card-soft transition">
+              <button
+                onClick={() => handleEdit(manufacturer)}
+                className="px-4 py-2 rounded-xl border border-border text-foreground) hover:bg-card-soft transition"
+              >
                 Edit
               </button>
               <button
@@ -118,7 +130,6 @@ const CompaniesDetails = () => {
             <div className="px-4 py-2 rounded-full bg-card text-sm">
               Products:
               <span className="font-semibold">
-                {" "}
                 {manufacturer.productsCount}
               </span>
             </div>
@@ -156,6 +167,7 @@ const CompaniesDetails = () => {
           </div>
         </div>
       )}
+      <DesablePopUp popup={popup} children={" ⚠️ Editing is temporarily disabled."} />
     </div>
   );
 };

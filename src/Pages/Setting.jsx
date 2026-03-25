@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import HeadingSubheading from "../components/HeadingSubheading";
 import AccountBar from "../componentpreant/AccountBar";
+import DesablePopUp from "../components/DesablePopUp";
 
 const Setting = () => {
-  let [showPopup, setShowPopup] = useState(false);
+  let [popup, setPopUp] = useState(false);
 
   const savedTheme = localStorage.getItem("theme");
   let [theme, setTheme] = useState(savedTheme);
@@ -44,11 +45,11 @@ const Setting = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem("userData", JSON.stringify(userInfo));
-    setShowPopup(true);
+    setPopUp(true);
 
     setTimeout(() => {
-      setShowPopup(false);
-    }, 2000);
+      setPopUp(false);
+    }, 3000);
   };
 
   return (
@@ -131,12 +132,7 @@ const Setting = () => {
             Save Changes
           </button>
         </form>
-        {showPopup && (
-          <div className="fixed top-6 right-3 backdrop-blur-md bg-white/30 border border-white/40 text-foreground px-5 py-3 rounded-xl shadow-(--color-shadow flex items-center gap-2 animate-slideIn">
-            <span className="text-green-500 text-lg">✔</span>
-            <p className="text-sm font-medium">Saved successfully</p>
-          </div>
-        )}
+        <DesablePopUp popup={popup} children={"Saved successfully ✅"}/>
       </div>
       <div className="pr-1">
         <select

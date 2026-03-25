@@ -15,30 +15,6 @@ export const getProducts = async () => {
     }
 };
 
-export const deleteProduct = async (id) => {
-    try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("https://admin-apis.vercel.apprcel.app/delete-manufacturer", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json", },
-            body: JSON.stringify({
-                item_id: id,
-                token: token
-            })
-        })
-        console.log("STATUS:", response.status);
-        const text = await response.text();
-        console.log("RAW RESPONSE:", text);
-        try {
-            const data = JSON.parse(text);
-            return data;
-        } catch {
-            console.log("Not JSON response");
-        }
-    } catch (error) {
-        console.error(error)
-    }
-}
 
 
 export const Getmanufacturers = async () => {

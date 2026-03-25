@@ -64,7 +64,7 @@ const Deals = () => {
           <AddButton children={"Add Deals"} onClick={() => AddDeal()} />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {loader && (
           <div className="w-full min-w-245 max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
@@ -117,7 +117,7 @@ const Deals = () => {
           deals.map((deal) => {
             return (
               <div key={deal._id} onClick={()=>handleclick(deal)
-              } className="bg-background shadow-(-shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
+              } className="bg-background shadow-(--shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
                 <DealCard
                   deal={deal}
                   getStatusColor={getStatusColor}
