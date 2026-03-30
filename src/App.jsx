@@ -17,6 +17,8 @@ import AddCompanieForm from "./components/AddCompanieForm";
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+
       <Route path="/login" element={<Login />} />
       <Route
         element={
@@ -33,7 +35,7 @@ function App() {
           element={<CompaniesDetails />}
         />
         <Route
-          path="admin/companie/add+new+companie"
+          path="/admin/companie/add+new+companie"
           element={<AddCompanieForm />}
         />
         <Route path="/admin/deals" element={<Deals />} />
