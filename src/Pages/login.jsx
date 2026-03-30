@@ -19,7 +19,6 @@ export const Login = () => {
       .post("https://admin-apis.vercel.app/login", payload, { withCredentials: true })
       .then((res) => {
         const data = res.data;
-        localStorage.setItem("token", data.token);
         localStorage.setItem(
           "user",
           JSON.stringify({
