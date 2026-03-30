@@ -68,7 +68,7 @@ const Reports = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div>
         <AccountBar />
       </div>
