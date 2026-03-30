@@ -11,12 +11,7 @@ export const ContactCard = ({
 }) => {
   return (
     <div
-      className="bg-background 
-                    border border-foreground
-                    shadow-md hover:shadow-(--shadow)
-                    transition-all duration-300
-                    rounded-2xl 
-                    p-5 w-65"
+      className="bg-background border border-foreground shadow-md hover:shadow-(--shadow) transition-all duration-300 rounded-2xl p-5 w-65"
     >
       <h1 className="text-lg font-semibold text-foreground">{Name}</h1>
       <p className="text-sm text-muted mt-1">

@@ -49,7 +49,7 @@ const Deals = () => {
   Navgation(`/admin/deal/${deal._id}`)
   }
   return (
-    <div className="flex-col gap-6 py-3 h-full flex w-full">
+    <div className="flex-col gap-6 py-3 flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -64,7 +64,6 @@ const Deals = () => {
           <AddButton children={"Add Deals"} onClick={() => AddDeal()} />
         </div>
       </div>
-      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {loader && (
           <div className="w-full min-w-245 max-w-7xl mx-auto px-4">

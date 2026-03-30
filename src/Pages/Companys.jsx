@@ -5,6 +5,7 @@ import HeadingSubheading from "../components/HeadingSubheading";
 import CompanyCard from "../components/CompanyCard";
 import video from "/videobg.mp4";
 import { useNavigate } from "react-router-dom";
+import { AddButton } from "../components/Button";
 const CompaniesPage = () => {
   let [companies, setcompanys] = useState([]);
   let [loader, setloader] = useState(true);
@@ -30,8 +31,10 @@ const CompaniesPage = () => {
   const companiesDeatilePage = (item) => {
     setcompanyname(item);
     Navgation(`/admin/companies/details/${item.id}`);
-    console.log(item);
   };
+  const AddCompanie=()=>{
+    Navgation("/admin/companie/add+new+companie")
+  }
   return (
     <div className="py-3">
       <div>
@@ -42,9 +45,7 @@ const CompaniesPage = () => {
           h1={"companies"}
           h2={"Manage your company relationships"}
         />
-        <button  className="px-3 font-medium py-2  h-fit whitespace-nowrap w-fit bg-primary/70 hover:bg-primary/85 text-foreground rounded-xl transition-all duration-300 cursor-pointer ">
-          <span className="text-xl">+</span> Add Companies
-        </button>
+       <AddButton onClick={()=>AddCompanie()} children={"+ Add Companie"} />
       </div>
       <div className="relative h-full border-t-4 border-blue-200 rounded-2xl w-full overflow-hidden p-10">
         <video

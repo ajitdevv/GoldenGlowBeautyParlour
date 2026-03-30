@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeadingSubheading from "../components/HeadingSubheading";
 import AccountBar from "../componentpreant/AccountBar";
 import DesablePopUp from "../components/DesablePopUp";
+import { AddButton } from "../components/Button";
 
 const Setting = () => {
   let [popup, setPopUp] = useState(false);
@@ -53,7 +54,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="flex-col gap-6 py-3 h-full flex w-full">
+    <div className="flex-col gap-6 py-3 flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -125,14 +126,9 @@ const Setting = () => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="mt-3 bg-primary text-primary-foreground py-2 rounded-lg font-semibold shadow-shadow hover:opacity-90 transition"
-          >
-            Save Changes
-          </button>
+          <AddButton children={"Save Changes"} type={"submit"} />
         </form>
-        <DesablePopUp popup={popup} children={"Saved successfully ✅"}/>
+        <DesablePopUp popup={popup} children={"Saved successfully ✅"} />
       </div>
       <div className="pr-1">
         <select

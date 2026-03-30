@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import { GetReports } from "../apis/product";
 import { Tag } from "lucide-react";
 import { ReportUpdate } from "../apis/updatedata";
+import { SaveButton } from "../components/Button";
+import DesablePopUp from "../components/DesablePopUp";
 
 const ReportFullView = () => {
   let [loading, setLoading] = useState(true);
   let [data, setData] = useState([]);
   let [error, setError] = useState(null);
-  let [urloading, setURLoading] = useState(true);
+  let [urloading, setURLoading] = useState(false);
+  let [popup, setPopUp] = useState(false);
   let [updateForm, setUpdateForm] = useState({
     status: "",
     priority: "",
@@ -38,7 +41,6 @@ const ReportFullView = () => {
   const handleReportUpdate = async () => {
     try {
       setURLoading(true);
-
       const edits = {
         reportId: SelectedReport.reportId,
         ...updateForm,
@@ -47,10 +49,15 @@ const ReportFullView = () => {
         id: SelectedReport._id,
         edits,
       });
-      console.log("update successfully");
+      setPopUp(true);
+      setTimeout(() => {
+        setPopUp(false);
+      }, 3000);
     } catch (error) {
       console.log("Report not updated", error);
       throw error;
+    } finally {
+      setURLoading(false);
     }
   };
   const { _id } = useParams();
@@ -128,12 +135,10 @@ const ReportFullView = () => {
         </div>
       )}
       {!loading && error && (
-        <div className="bg-red-300 text-black">
-          {error}
-          {!loading && !error && !SelectedReport && (
-            <div className="bg-blue-300 text-black">not found</div>
-          )}
-        </div>
+        <div className="bg-red-300 text-black">{error}</div>
+      )}
+      {!loading && !error && !SelectedReport && (
+        <div className="bg-blue-300 text-black">not found</div>
       )}
       {!loading && !error && SelectedReport && (
         <div>
@@ -232,9 +237,12 @@ const ReportFullView = () => {
                     onChange={handleChange}
                     className="w-full p-2 border rounded-lg text-sm"
                   >
-                    <option>Pending</option>
-                    <option>Resolved</option>
-                    <option>Rejected</option>
+                    <option className="bg-blue-400 text-black" disabled>
+                      {SelectedReport.status}
+                    </option>
+                    <option>pending</option>
+                    <option>resolved</option>
+                    <option>rejected</option>
                   </select>
                 </div>
                 <hr className="h-px bg-muted w-full" />
@@ -246,9 +254,12 @@ const ReportFullView = () => {
                     onChange={handleChange}
                     className="w-full p-2 border rounded-lg text-sm"
                   >
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
+                    <option className="bg-blue-400 text-black" disabled>
+                      {SelectedReport.priority}
+                    </option>
+                    <option>low</option>
+                    <option>medium</option>
+                    <option>high</option>
                   </select>
                 </div>
                 <hr className="h-px bg-muted w-full" />
@@ -259,20 +270,22 @@ const ReportFullView = () => {
                   <textarea
                     name="description"
                     onChange={handleChange}
-                    className="w-full border rounded-lg text-sm"
+                    className="w-full border rounded-lg p-2 bg-card/50 text-sm"
                     placeholder="Add internal note..."
                   />
                 </div>
                 <hr className="h-px my-2 bg-muted w-full" />
-                <button
-                  onClick={handleReportUpdate}
-                  className="w-full p-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                <SaveButton
+                  onClick={() => handleReportUpdate()}
+                  urloading={urloading}
+                  style={"w-full px-1"}
                 >
                   Save Note
-                </button>
+                </SaveButton>
               </div>
             </div>
           </div>
+          <DesablePopUp popup={popup}>Edit successfully ✅ </DesablePopUp>
         </div>
       )}
     </div>

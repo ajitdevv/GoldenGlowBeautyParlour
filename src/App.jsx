@@ -13,6 +13,7 @@ import AdminInfo from "./Pages/AdminInfo";
 import Reports from "./Pages/Reports";
 import ReportFullView from "./Pages/ReportFullView";
 import DealFullView from "./Pages/DealFullView";
+import AddCompanieForm from "./components/AddCompanieForm";
 function App() {
   return (
     <Routes>
@@ -27,7 +28,14 @@ function App() {
         <Route path="/admin/dashboard" element={<Deshboard />} />
         <Route path="/admin/contact" element={<ContactsPage />} />
         <Route path="/admin/companys" element={<CompaniesPage />} />
-        <Route path="/admin/companies/details/:id" element={<CompaniesDetails />} />
+        <Route
+          path="/admin/companies/details/:id"
+          element={<CompaniesDetails />}
+        />
+        <Route
+          path="admin/companie/add+new+companie"
+          element={<AddCompanieForm />}
+        />
         <Route path="/admin/deals" element={<Deals />} />
         <Route path="/admin/deal/:_id" element={<DealFullView />} />
         <Route path="/admin/deals/add+new+deal" element={<AddDealFrom />} />

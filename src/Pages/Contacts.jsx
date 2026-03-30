@@ -61,7 +61,7 @@ const ContactsPage = () => {
     navgation(`/admin/companies/details/${item.id}`);
   };
   return (
-    <div className="flex-col gap-6 px-2 py-3 h-full flex w-full">
+    <div className="flex-col gap-6 px-2 py-3 items-center  flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -97,13 +97,16 @@ const ContactsPage = () => {
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {loading &&
-          Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl shadow-md border p-5 animate-pulse"
-            >
+          <div
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-5"
+          >
+       
+       {loading &&
+        Array.from({ length: 6 }).map((_, i) => (
+          <div
+          key={i}
+          >
+            <div className="bg-white rounded-2xl shadow-md border w-65 p-5 animate-pulse">
               <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-4"></div>
               <div className="h-4 bg-gray-300 rounded w-5/6 mx-auto mb-6"></div>
 
@@ -114,23 +117,28 @@ const ContactsPage = () => {
                 <div className="h-4 bg-gray-300 rounded w-5/6"></div>
               </div>
             </div>
-          ))}
-        {!loading && error && (
-          <div className="col-span-full text-center text-red-400">
-            <div>{error}</div>
-            <div>
-              <RetryButton onClick={handleRetryClick()} children={"Retry"} />
-            </div>
           </div>
-        )}
-        {!loading &&
-          !error &&
-          sortdata.length > 0 &&
-          sortdata.map((item) => {
-            return (
-              <div key={item.id} className="">
+        ))}
+        </div>
+
+      {!loading && error && (
+        <div className="col-span-full text-center text-red-400">
+          <div>{error}</div>
+          <div>
+            <RetryButton onClick={handleRetryClick()} children={"Retry"} />
+          </div>
+        </div>
+      )}
+      <div className="w-full justify-center flex">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          {!loading &&
+            !error &&
+            sortdata.length > 0 &&
+            sortdata.map((item) => {
+              return (
                 <div
-                  className="cursor-pointer"
+                  key={item.id}
+                  className="cursor-pointer "
                   onClick={() => handeldatilecard(item)}
                 >
                   <ContactCard
@@ -143,9 +151,9 @@ const ContactsPage = () => {
                     since={item.contact.since}
                   />
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
       </div>
     </div>
   );
