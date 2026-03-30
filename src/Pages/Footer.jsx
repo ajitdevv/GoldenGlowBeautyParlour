@@ -7,7 +7,7 @@ const Footer = () => {
         {/* 👤 About */}
         <div>
           <h2 className="text-lg font-semibold text-foreground">
-            AJ (Frontend Developer)
+            AJEET BAIRWA (Frontend Developer)
           </h2>
           <p className="text-sm text-foreground/60 mt-2">
             Passionate about building clean UI, scalable web apps, and
@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="border-t text-center text-xs py-4 text-foreground/50">
-        🚀 Built with ❤️ by AJ • {new Date().getFullYear()}
+        🚀 Built with ❤️ by AJEET BAIRWA • {new Date().getFullYear()}
       </div>
     </footer>
   );
