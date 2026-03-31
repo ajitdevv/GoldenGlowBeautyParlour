@@ -15,9 +15,11 @@ import ReportFullView from "./Pages/ReportFullView";
 import DealFullView from "./Pages/DealFullView";
 import AddCompanieForm from "./components/AddCompanieForm";
 import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <>
+    <Toaster position="top-right"/>
       <Analytics />
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />

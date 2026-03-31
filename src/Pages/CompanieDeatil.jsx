@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Getmanufacturers } from "../apis/product";
 import { deleteProduct } from "../apis/deletedata";
 import DesablePopUp from "../components/DesablePopUp";
 import { RetryButton } from "../components/Button";
+import toast from "react-hot-toast";
 
 const CompaniesDetails = () => {
   let [manufacturers, setmanufacturers] = useState([]);
@@ -11,6 +12,7 @@ const CompaniesDetails = () => {
   let [loading, setloading] = useState(true);
   let [popup, setPopUp] = useState(false);
   let { id } = useParams();
+  let navigation=useNavigate()
   useEffect(() => {
     FetchData();
   }, [id]);
@@ -36,10 +38,21 @@ const CompaniesDetails = () => {
       .join("")
       .toUpperCase();
   };
-  const handleDelete = async (id) => {
 
-    
-  };
+  const handleDelete = async (id) => {
+  try {
+    await toast.promise(
+      deleteProduct(id),
+      {
+        loading: "Deleting...",
+        success: "Deleted successfully",
+        error: "Delete failed",
+      }
+    );
+
+    navigation("/admin/companys");
+  } catch {}
+};
   const handleEdit = async (manufacturer) => {
     setPopUp(true);
     setTimeout(() => {
