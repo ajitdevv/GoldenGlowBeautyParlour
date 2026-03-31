@@ -18,21 +18,21 @@ const Reports = () => {
   });
   let navigate = useNavigate();
   useEffect(() => {
-    const fetchReports = async () => {
-      try {
-        setLoader(true);
-        setError(null);
-        const data = await GetReports();
-        setReportsData(data.data);
-      } catch (error) {
-        console.log("Error Fetch Report", error);
-        setError("Reports Not Found");
-      } finally {
-        setLoader(false);
-      }
-    };
     fetchReports();
   }, []);
+  const fetchReports = async () => {
+    try {
+      setLoader(true);
+      setError(null);
+      const data = await GetReports();
+      setReportsData(data.data);
+    } catch (error) {
+      console.log("Error Fetch Report", error);
+      setError("Reports Not Found");
+    } finally {
+      setLoader(false);
+    }
+  };
   const FilterReports = appliedFilter
     ? reportsData.filter((item) => {
         return (
@@ -68,7 +68,7 @@ const Reports = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-2">
       <div>
         <AccountBar />
       </div>
@@ -193,7 +193,6 @@ const Reports = () => {
                 <th className="px-4 py-3">Priority</th>
               </tr>
             </thead>
-
             <tbody className="">
               {FilterReports.map((item) => (
                 <tr

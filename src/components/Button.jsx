@@ -11,7 +11,9 @@ export const AddButton = ({ children, onClick }) => {
 
 export const RetryButton = ({ children, onClick }) => {
   return (
-    <button onClick={onclick} className="bg-accent p-2">
+    <button onClick={onClick} 
+      className="hover:bg-primary bg-primary/80 py-2 whitespace-nowrap px-4 rounded-2xl transition-all duration-300 cursor-pointer text-foreground"
+    >
       {children}
     </button>
   );

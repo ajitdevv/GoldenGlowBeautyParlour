@@ -12,21 +12,21 @@ const CompaniesPage = () => {
   let [error, setError] = useState(null);
   let [companyname, setcompanyname] = useState(null);
   useEffect(() => {
-    const FetchData = async () => {
-      try {
-        setloader(true);
-        setError(null);
-        const data = await Getmanufacturers();
-        setcompanys(data.data);
-      } catch (error) {
-        console.log("Error loading companies", error);
-        setError("Failed to load companies");
-      } finally {
-        setloader(false);
-      }
-    };
     FetchData();
   }, []);
+  const FetchData = async () => {
+    try {
+      setloader(true);
+      setError(null);
+      const data = await Getmanufacturers();
+      setcompanys(data.data);
+    } catch (error) {
+      console.log("Error loading companies", error);
+      setError("Failed to load companies");
+    } finally {
+      setloader(false);
+    }
+  };
   let Navgation = useNavigate();
   const companiesDeatilePage = (item) => {
     setcompanyname(item);

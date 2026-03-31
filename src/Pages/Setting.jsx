@@ -5,9 +5,9 @@ import DesablePopUp from "../components/DesablePopUp";
 import { AddButton } from "../components/Button";
 
 const Setting = () => {
-  let [popup, setPopUp] = useState(false);
-
   const savedTheme = localStorage.getItem("theme");
+  
+  let [popup, setPopUp] = useState(false);
   let [theme, setTheme] = useState(savedTheme);
   useEffect(() => {
     if (savedTheme) {

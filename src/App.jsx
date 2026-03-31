@@ -18,17 +18,11 @@ import { Analytics } from "@vercel/analytics/react";
 function App() {
   return (
     <>
-    <Analytics />
+      <Analytics />
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<AdminLayout />}>
           <Route path="/admin/dashboard" element={<Deshboard />} />
           <Route path="/admin/contact" element={<ContactsPage />} />
           <Route path="/admin/companys" element={<CompaniesPage />} />

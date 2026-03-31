@@ -3,29 +3,30 @@ import { useParams } from "react-router-dom";
 import { Getmanufacturers } from "../apis/product";
 import { deleteProduct } from "../apis/deletedata";
 import DesablePopUp from "../components/DesablePopUp";
+import { RetryButton } from "../components/Button";
 
 const CompaniesDetails = () => {
   let [manufacturers, setmanufacturers] = useState([]);
   let [error, seterror] = useState(null);
-  let [loader, setloader] = useState(true);
+  let [loading, setloading] = useState(true);
   let [popup, setPopUp] = useState(false);
   let { id } = useParams();
   useEffect(() => {
-    const FatchData = async () => {
-      setloader(true);
-      try {
-        seterror(null);
-        let data = await Getmanufacturers(id);
-        setmanufacturers(data.data);
-      } catch (error) {
-        console.log("Data not found", error);
-        seterror("data not found plz try again");
-      } finally {
-        setloader(false);
-      }
-    };
-    FatchData();
+    FetchData();
   }, [id]);
+  const FetchData = async () => {
+    setloading(true);
+    try {
+      seterror(null);
+      let data = await Getmanufacturers(id);
+      setmanufacturers(data.data);
+    } catch (error) {
+      console.log("Data not found", error);
+      seterror("data not found plz try again");
+    } finally {
+      setloading(false);
+    }
+  };
 
   const manufacturer = manufacturers.find((item) => item.id === Number(id));
   const getInitials = (manufacturer) => {
@@ -36,19 +37,18 @@ const CompaniesDetails = () => {
       .toUpperCase();
   };
   const handleDelete = async (id) => {
-    console.log(id);
-    await deleteProduct(id);
+
+    
   };
   const handleEdit = async (manufacturer) => {
     setPopUp(true);
-
     setTimeout(() => {
       setPopUp(false);
     }, 3000);
   };
   return (
     <div className="flex relative bg-[url('/Greadientdeatile.jpg')] bg-cover  w-full h-full justify-center items-center p-10 ">
-      {loader && (
+      {loading && (
         <div
           className="w-full h-full max-w-3xl rounded-3xl  p-8 
     bg-white/10 backdrop-blur-xl border border-white/20 
@@ -89,12 +89,18 @@ const CompaniesDetails = () => {
           </div>
         </div>
       )}
-      {!loader && error && (
+      {!loading && error && (
         <div className="w-full h-full">
           <h1 className="text-2xl text-foreground">{error}</h1>
         </div>
       )}
-      {!loader && !error && manufacturer && (
+      {!loading && !error && manufacturer === undefined && (
+        <div>
+          <h1>Unable to load company details. Please try again.</h1>
+          <RetryButton onClick={() => FetchData()} children={"Retry"} />
+        </div>
+      )}
+      {!loading && !error && manufacturer && (
         <div
           className="w-full max-w-3xl rounded-3xl p-8 backdrop-blur-md transition-all duration-300 hover:backdrop-blur-xs border border-muted"
           style={{
@@ -151,23 +157,26 @@ const CompaniesDetails = () => {
               <h2 className="text-xl font-semibold text-foreground">
                 {manufacturer?.contact?.personName}
               </h2>
-              <p className="text-foreground">{manufacturer.contact.position}</p>
+              <p className="text-foreground">{manufacturer?.contact?.position}</p>
 
               <div className="pt-2 space-y-1 text-sm text-foreground">
-                <p>📅 Contacted: {manufacturer.contact.contactDate}</p>
-                <p>📧 {manufacturer.contact.email}</p>
-                <p>📞 {manufacturer.contact.phone}</p>
+                <p>📅 Contacted: {manufacturer?.contact?.contactDate}</p>
+                <p>📧 {manufacturer?.contact?.email}</p>
+                <p>📞 {manufacturer?.contact?.phone}</p>
               </div>
             </div>
           </div>
           <div className="border-t border-border my-6"></div>
           <div className="flex justify-between text-sm text-foreground">
-            <div>Relationship Since: {manufacturer.contact.since}</div>
-            <div>ID: #{manufacturer.id}</div>
+            <div>Relationship Since: {manufacturer?.contact?.since}</div>
+            <div>ID: #{manufacturer?.id}</div>
           </div>
         </div>
       )}
-      <DesablePopUp popup={popup} children={" ⚠️ Editing is temporarily disabled."} />
+      <DesablePopUp
+        popup={popup}
+        children={" ⚠️ Editing is temporarily disabled."}
+      />
     </div>
   );
 };

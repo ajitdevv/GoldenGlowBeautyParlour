@@ -7,34 +7,31 @@ import { useNavigate } from "react-router-dom";
 import { RetryButton } from "../components/Button";
 
 const ContactsPage = () => {
-  let [Manufacturedata, setManufacturedata] = useState([]);
+  let [manufacturerData, setManufacturerData] = useState([]);
   let [loading, setloading] = useState(true);
   let [error, seterror] = useState(null);
   let [filterby, setfilterby] = useState("Normal");
 
-  const navgation = useNavigate();
+  const navigation = useNavigate();
   useEffect(() => {
-    const FetchData = async () => {
-      try {
-        setloading(true);
-        seterror(null);
-        const data = await Getmanufacturers();
-        setManufacturedata(data.data);
-      } catch (error) {
-        console.log("Error Lodaing Manufacturedata", error);
-        seterror("Failed to load Manufacture");
-      } finally {
-        setloading(false);
-      }
-    };
-
     FetchData();
   }, []);
 
-  const handleRetryClick = () => {
-    console.log("click work ");
+  const FetchData = async () => {
+    try {
+      setloading(true);
+      seterror(null);
+      const data = await Getmanufacturers();
+      setManufacturerData(data.data);
+    } catch (error) {
+      console.log("Error Lodaing manufacturerData", error);
+      seterror("Failed to load Manufacture");
+    } finally {
+      setloading(false);
+    }
   };
-  const sortdata = [...Manufacturedata].sort((a, b) => {
+
+  const sortdata = [...manufacturerData].sort((a, b) => {
     switch (filterby) {
       case "Normal":
         return a.id - b.id;
@@ -57,8 +54,8 @@ const ContactsPage = () => {
         break;
     }
   });
-  const handeldatilecard = (item) => {
-    navgation(`/admin/companies/details/${item.id}`);
+  const handleDetailCard = (item) => {
+    navigation(`/admin/companies/details/${item.id}`);
   };
   return (
     <div className="flex-col gap-6 px-2 py-3 items-center  flex w-full">
@@ -97,37 +94,35 @@ const ContactsPage = () => {
           </select>
         </div>
       </div>
-          <div
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-5"
-          >
-       
-       {loading &&
-        Array.from({ length: 6 }).map((_, i) => (
-          <div
-          key={i}
-          >
-            <div className="bg-white rounded-2xl shadow-md border w-65 p-5 animate-pulse">
-              <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-4"></div>
-              <div className="h-4 bg-gray-300 rounded w-5/6 mx-auto mb-6"></div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-5">
+        {loading &&
+          Array.from({ length: 6 }).map((_, i) => (
+            <div key={i}>
+              <div className="bg-white rounded-2xl shadow-md border w-65 p-5 animate-pulse">
+                <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-4"></div>
+                <div className="h-4 bg-gray-300 rounded w-5/6 mx-auto mb-6"></div>
 
-              <div className="space-y-3">
-                <div className="h-4 bg-gray-300 rounded w-full"></div>
-                <div className="h-4 bg-gray-300 rounded w-3/6"></div>
-                <div className="h-4 bg-gray-300 rounded w-4/6"></div>
-                <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+                <div className="space-y-3">
+                  <div className="h-4 bg-gray-300 rounded w-full"></div>
+                  <div className="h-4 bg-gray-300 rounded w-3/6"></div>
+                  <div className="h-4 bg-gray-300 rounded w-4/6"></div>
+                  <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-        </div>
+          ))}
+      </div>
 
       {!loading && error && (
         <div className="col-span-full text-center text-red-400">
           <div>{error}</div>
           <div>
-            <RetryButton onClick={handleRetryClick()} children={"Retry"} />
+            <RetryButton onClick={() => FetchData()} children={"Retry"} />
           </div>
         </div>
+      )}
+      {!loading && !error && sortdata.length === 0 && (
+        <div>{filterby} filter data not founded </div>
       )}
       <div className="w-full justify-center flex">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
@@ -139,7 +134,7 @@ const ContactsPage = () => {
                 <div
                   key={item.id}
                   className="cursor-pointer "
-                  onClick={() => handeldatilecard(item)}
+                  onClick={() => handleDetailCard(item)}
                 >
                   <ContactCard
                     position={item.contact.position}

@@ -12,21 +12,21 @@ const Deals = () => {
   let [loader, setLoader] = useState(true);
   let [error, setError] = useState(false);
   useEffect(() => {
-    const FetchData = async () => {
-      try {
-        setLoader(true);
-        setError(false);
-        const data = await GetDeals();
-        setDeals(data.data);
-      } catch (error) {
-        setError(true);
-        console.log("Error loading Deals", error);
-      } finally {
-        setLoader(false);
-      }
-    };
     FetchData();
   }, []);
+  const FetchData = async () => {
+    try {
+      setLoader(true);
+      setError(false);
+      const data = await GetDeals();
+      setDeals(data.data);
+    } catch (error) {
+      setError(true);
+      console.log("Error loading Deals", error);
+    } finally {
+      setLoader(false);
+    }
+  };
   console.log(deals);
   const getStatusColor = (status) => {
     switch (status) {

@@ -18,20 +18,20 @@ const ReportFullView = () => {
     description: "",
   });
   useEffect(() => {
-    const Fatchdata = async () => {
-      try {
-        setLoading(true);
-        const data = await GetReports();
-        setData(data.data);
-      } catch (error) {
-        console.log("faild to fatch reports", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
     Fatchdata();
   }, []);
+  const Fatchdata = async () => {
+    try {
+      setLoading(true);
+      const data = await GetReports();
+      setData(data.data);
+    } catch (error) {
+      console.log("faild to fatch reports", error);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleChange = (e) => {
     setUpdateForm((prev) => ({
       ...prev,

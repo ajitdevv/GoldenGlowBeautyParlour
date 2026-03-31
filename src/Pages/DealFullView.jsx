@@ -12,24 +12,25 @@ const DealFullView = () => {
   let [data, setData] = useState([]);
   let [dloading, setDLoading] = useState(false);
   useEffect(() => {
-    const Fetchdata = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const res = await GetDeals();
-        setData(res.data);
-      } catch (err) {
-        console.log("Error Loading Deals", err);
-        setError("Failed to load deals");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    
     Fetchdata();
   }, [_id]);
+  
+  const Fetchdata = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
+      const res = await GetDeals();
+      setData(res.data);
+    } catch (err) {
+      console.log("Error Loading Deals", err);
+      setError("Failed to load deals");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const FindDeal = data.find((item) => String(item._id) === String(_id));
 
   const handleDealDelete = async (FindDeal) => {
