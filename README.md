@@ -129,7 +129,7 @@ src/
 ### 1️⃣ Clone Repository
 
 ```
-git clone https://github.com/ajitdevv/YOUR-REPO
+git clone https://github.com/ajitdevv/GoldenGlowBeautyParlour
 cd YOUR-REPO
 ```
 
