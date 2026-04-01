@@ -11,4 +11,4 @@ const AccountBar = () => {
   );
 };
 
-export default AccountBar;
+export default React.memo(AccountBar);

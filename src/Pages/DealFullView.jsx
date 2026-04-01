@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetDeals } from "../apis/product";
 import HeadingSubheading from "../components/HeadingSubheading";
 import { DeleteDeal } from "../apis/deletedata";
+import toast from "react-hot-toast";
 
 const DealFullView = () => {
   const { _id } = useParams();
@@ -10,12 +11,10 @@ const DealFullView = () => {
   let [loading, setLoading] = useState(true);
   let [error, setError] = useState(null);
   let [data, setData] = useState([]);
-  let [dloading, setDLoading] = useState(false);
   useEffect(() => {
-    
     Fetchdata();
   }, [_id]);
-  
+
   const Fetchdata = async () => {
     try {
       setLoading(true);
@@ -30,20 +29,27 @@ const DealFullView = () => {
       setLoading(false);
     }
   };
-  
+  let navigation = useNavigate();
   const FindDeal = data.find((item) => String(item._id) === String(_id));
 
+  const handleDealEdit=(FindDeal)=>{
+    toast.error("Edit Temporarily Disabled")
+  }
   const handleDealDelete = async (FindDeal) => {
     try {
-      setDLoading(true);
-      await DeleteDeal({ id: FindDeal.id });
+      await toast.promise(DeleteDeal({ id: FindDeal.id }), {
+        loading: "Deleting...",
+        success: "Deleted successfully",
+        error: "Delete failed",
+      });
+      navigation("/admin/deals")
     } catch (error) {
       console.log("Not delet", error);
       throw error;
     }
   };
   return (
-    <div className="flex flex-col items-center gap-2 md:gap-5 mt-10">
+    <div className="flex flex-col items-center gap-2 md:gap-5 p-2 mt-10">
       <div className="flex items-start w-full ml-2">
         <HeadingSubheading
           h1={"Deal Details"}
@@ -141,7 +147,7 @@ const DealFullView = () => {
 
             <div className="flex gap-3">
               <button
-                onClick={() => console.log("Edit", FindDeal)}
+                onClick={() => handleDealEdit(FindDeal)}
                 className="flex-1 py-2 rounded-xl bg-(--primary) text-(--primary-foreground) text-sm font-medium"
               >
                 Edit

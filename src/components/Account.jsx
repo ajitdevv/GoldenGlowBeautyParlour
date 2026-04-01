@@ -1,22 +1,18 @@
 import { ChevronDown, CircleUser, LogOutIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DesablePopUp from "./DesablePopUp";
+import toast from "react-hot-toast";
 
-const Account = () => {
-  let [popup, setPopUp] = useState(false);
+const Account = React.memo(() => {
   let user = JSON.parse(localStorage.getItem("user"));
   let navigation = useNavigate();
-  const handleUserInfo = () => {
+  const handleUserInfo = useCallback(() => {
     navigation("/admin/admin+info");
-  };
+  },[navigation]);
 
   let handellogout = () => {
-    setPopUp(true);
-    setTimeout(() => {
       navigation("/login");
-      setPopUp(false);
-    }, 2000);
+      toast.success("Logout successfully ✅")
   };
   return (
     <div className="relative group flex flex-col z-99 items-end p-5">
@@ -41,9 +37,7 @@ const Account = () => {
           <h1 className="text-foreground text-lg">{user?.username}</h1>
           <h2 className="text-muted text-sm">{user?.email}</h2>
         </div>
-
-        <DesablePopUp popup={popup}>Logout successfully ✅</DesablePopUp>
-        <hr className="border w-full border-muted my-4" />
+ <hr className="border w-full border-muted my-4" />
 
         <button
           onClick={() => handellogout()}
@@ -54,6 +48,6 @@ const Account = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Account;

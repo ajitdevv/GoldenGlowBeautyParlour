@@ -5,6 +5,7 @@ import { Tag } from "lucide-react";
 import { ReportUpdate } from "../apis/updatedata";
 import { SaveButton } from "../components/Button";
 import DesablePopUp from "../components/DesablePopUp";
+import toast from "react-hot-toast";
 
 const ReportFullView = () => {
   let [loading, setLoading] = useState(true);
@@ -49,10 +50,7 @@ const ReportFullView = () => {
         id: SelectedReport._id,
         edits,
       });
-      setPopUp(true);
-      setTimeout(() => {
-        setPopUp(false);
-      }, 3000);
+      toast.success("Edit successfully ✅")
     } catch (error) {
       console.log("Report not updated", error);
       throw error;
@@ -284,9 +282,7 @@ const ReportFullView = () => {
                 </SaveButton>
               </div>
             </div>
-          </div>
-          <DesablePopUp popup={popup}>Edit successfully ✅ </DesablePopUp>
-        </div>
+          </div></div>
       )}
     </div>
   );

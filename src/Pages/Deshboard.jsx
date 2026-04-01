@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Getmanufacturers, getProducts } from "../apis/product";
 import TotalCards from "../componentpreant/TotalCards";
@@ -16,7 +16,7 @@ const Deshboard = () => {
   useEffect(() => {
     FetchData();
   }, []);
-  const FetchData = async () => {
+  const FetchData =async () => {
     try {
       setloading(true);
       seterr(null);

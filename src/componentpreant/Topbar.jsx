@@ -1,7 +1,7 @@
 import { HdmiPortIcon, ListMinus, X } from "lucide-react";
 import React from "react";
 import logo from "../assets/logoAj.png";
-const Topbar = ({ manuopen, setManuopen }) => {
+const Topbar = React.memo(({ manuopen, setManuopen }) => {
   return (
     <div className="bg-background sticky flex justify-between z-100 shadow-(--shadow) top-0 right-0 p-3 md:-top-40 md:fixed w-full text-4xl">
       <div className=" w-fit" onClick={() => setManuopen((prev) => !prev)}>
@@ -21,6 +21,6 @@ const Topbar = ({ manuopen, setManuopen }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Topbar;

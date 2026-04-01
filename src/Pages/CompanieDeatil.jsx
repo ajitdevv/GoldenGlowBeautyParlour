@@ -10,7 +10,6 @@ const CompaniesDetails = () => {
   let [manufacturers, setmanufacturers] = useState([]);
   let [error, seterror] = useState(null);
   let [loading, setloading] = useState(true);
-  let [popup, setPopUp] = useState(false);
   let { id } = useParams();
   let navigation=useNavigate()
   useEffect(() => {
@@ -49,15 +48,11 @@ const CompaniesDetails = () => {
         error: "Delete failed",
       }
     );
-
     navigation("/admin/companys");
   } catch {}
 };
   const handleEdit = async (manufacturer) => {
-    setPopUp(true);
-    setTimeout(() => {
-      setPopUp(false);
-    }, 3000);
+   toast.error("Editing is temporarily disabled.")
   };
   return (
     <div className="flex relative bg-[url('/Greadientdeatile.jpg')] bg-cover  w-full h-full justify-center items-center p-10 ">
@@ -155,7 +150,6 @@ const CompaniesDetails = () => {
             <div className="px-4 py-2 rounded-full bg-card text-sm">
               Since:
               <span className="font-semibold ">
-                {" "}
                 {manufacturer.contact.since.split("-")[0]}
               </span>
             </div>
@@ -186,10 +180,6 @@ const CompaniesDetails = () => {
           </div>
         </div>
       )}
-      <DesablePopUp
-        popup={popup}
-        children={" ⚠️ Editing is temporarily disabled."}
-      />
     </div>
   );
 };

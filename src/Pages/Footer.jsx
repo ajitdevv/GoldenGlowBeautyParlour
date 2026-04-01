@@ -4,7 +4,6 @@ const Footer = () => {
   return (
     <footer className="bg-card-soft sticky border-t mt-16">
       <div className="px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* 👤 About */}
         <div>
           <h2 className="text-lg font-semibold text-foreground">
             AJEET BAIRWA (Frontend Developer)
@@ -14,7 +13,6 @@ const Footer = () => {
             real-world admin dashboards.
           </p>
         </div>
-
         <div>
           <h3 className="font-semibold text-foreground mb-3">Explore</h3>
           <ul className="space-y-2 text-sm text-foreground/70">

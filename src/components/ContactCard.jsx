@@ -1,6 +1,7 @@
 import { Mail, Phone, Building2, Calendar } from "lucide-react";
+import React from "react";
 
-export const ContactCard = ({
+export const ContactCard = React.memo(({
   position,
   Company,
   Name,
@@ -18,11 +19,11 @@ export const ContactCard = ({
         {position} at{" "}
         <span className="font-medium text-foreground">{Company}</span>
       </p>
-      <div className="flex items-center gap-2 mt-3 text-sm text-mute">
+      <div className="flex items-center gap-2 mt-3 text-sm text-muted">
         <Mail size={14} className="text-sky-600"/>
         <span className="truncate">{Gmail}</span>
       </div>
-      <div className="flex items-center gap-2 mt-2 text-sm text-mute">
+      <div className="flex items-center gap-2 mt-2 text-sm text-muted">
         <Phone className="text-red-500" size={14} />
         <span>{phoneNo}</span>
       </div>
@@ -36,4 +37,4 @@ export const ContactCard = ({
       </div>
     </div>
   );
-};
+});

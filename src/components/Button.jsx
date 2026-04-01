@@ -1,3 +1,5 @@
+import React from "react";
+
 export const AddButton = ({ children, onClick }) => {
   return (
     <button
@@ -19,7 +21,7 @@ export const RetryButton = ({ children, onClick }) => {
   );
 };
 
-export const SaveButton = ({ children, onClick, type, style, urloading }) => {
+export const SaveButton = React.memo(({ children, onClick, type, style, urloading }) => {
   return (
     <button
       type={type}
@@ -34,4 +36,4 @@ export const SaveButton = ({ children, onClick, type, style, urloading }) => {
       {urloading ? "Saving..." : children}
     </button>
   );
-};
+});

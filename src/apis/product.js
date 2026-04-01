@@ -52,11 +52,10 @@ export const GetDeals = async () => {
 }
 export const AddDeal = async (dealData) => {
     try {
-        const response = await fetch("https://admin-apis.vercel.app/get-deals",
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, }, body: JSON.stringify(dealData),
-            });
+        const response = await fetch("https://admin-apis.vercel.app/add-deal", {
+            method: "POST", credentials: "include",
+            headers: { "Content-Type": "application/json", }, body: JSON.stringify(dealData),
+        });
         if (!response.ok) {
             throw new Error("Failed to add deal")
 

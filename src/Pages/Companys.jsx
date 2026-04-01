@@ -6,6 +6,7 @@ import CompanyCard from "../components/CompanyCard";
 import video from "/videobg.mp4";
 import { useNavigate } from "react-router-dom";
 import { AddButton } from "../components/Button";
+import toast from "react-hot-toast";
 const CompaniesPage = () => {
   let [companies, setcompanys] = useState([]);
   let [loader, setloader] = useState(true);
@@ -33,7 +34,8 @@ const CompaniesPage = () => {
     Navgation(`/admin/companies/details/${item.id}`);
   };
   const AddCompanie=()=>{
-    Navgation("/admin/companie/add+new+companie")
+    toast("⚠️ Add New Companie is temporarily disabled")
+    // Navgation("/admin/companie/add+new+companie")/
   }
   return (
     <div className="py-3">

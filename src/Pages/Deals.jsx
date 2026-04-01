@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Deals = () => {
   let [deals, setDeals] = useState([]);
   let [loader, setLoader] = useState(true);
-  let [error, setError] = useState(false);
+  let [error, setError] = useState(null);
   useEffect(() => {
     FetchData();
   }, []);
@@ -27,7 +27,6 @@ const Deals = () => {
       setLoader(false);
     }
   };
-  console.log(deals);
   const getStatusColor = (status) => {
     switch (status) {
       case "Active":
@@ -36,7 +35,6 @@ const Deals = () => {
         return "bg-yellow-500 text-white";
       case "Closed":
         return "bg-red-500 text-white";
-
       default:
         return "bg-gray-400 text-black";
     }
@@ -49,7 +47,7 @@ const Deals = () => {
   Navgation(`/admin/deal/${deal._id}`)
   }
   return (
-    <div className="flex-col gap-6 py-3 flex w-full">
+    <div className="flex-col gap-6 px-2 py-3 flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -106,7 +104,7 @@ const Deals = () => {
         {!loader && error && (
           <div className="col-span-full text-center text-danger">{error}</div>
         )}
-        {!loader && !error && deals.length < 0 && (
+        {!loader && !error && deals.length === 0 && (
           <div className="col-span-full text-center text-danger">
             Deals Are Not Found & Not Avalible
           </div>
@@ -117,7 +115,7 @@ const Deals = () => {
           deals.map((deal) => {
             return (
               <div key={deal._id} onClick={()=>handleclick(deal)
-              } className="bg-background shadow-(--shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
+              } className="bg-background cursor-pointer hover:scale-[1.02] active:scale-[0.98] shadow-(--shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
                 <DealCard
                   deal={deal}
                   getStatusColor={getStatusColor}

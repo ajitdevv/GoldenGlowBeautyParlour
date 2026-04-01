@@ -72,18 +72,7 @@ const ContactsPage = () => {
         <div className="relative w-fit">
           <select
             onChange={(e) => setfilterby(e.target.value)}
-            className="w-full 
-               appearance-none 
-               bg-card-soft
-               border border-card
-               text-sm text-muted
-               rounded-xl
-               px-4 py-2 z-90
-               shadow-sm
-               focus:outline-none 
-               focus:ring-2 
-               focus:ring-primary
-               cursor-pointer"
+            className="w-full text-[10px] md:text-sm  appearance-none bg-card-soft border border-card text-muted rounded-xl px-1 md:px-3 py-1 md:py-2 z-90 shadow-sm focus:outline-none  focus:ring-2  focus:ring-primary cursor-pointer"
           >
             <option value="Normal">Normal</option>
             <option value="AtoZ">A to Z</option>

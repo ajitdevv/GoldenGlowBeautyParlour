@@ -44,4 +44,4 @@ const TotalCards = ( {productdata ,manufacturers}) => {
   );
 };
 
-export default TotalCards;
+export default React.memo(TotalCards);

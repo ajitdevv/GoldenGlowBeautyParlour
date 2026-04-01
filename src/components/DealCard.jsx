@@ -1,4 +1,5 @@
 import { User2Icon } from "lucide-react";
+import React from "react";
 
 const DealCard = ({ deal, getStatusColor }) => {
   return (
@@ -37,7 +38,6 @@ const DealCard = ({ deal, getStatusColor }) => {
           {deal.status}
         </span>
       </div>
-
       <div className="mt-2 text-xs text-gray-400">
         Close Date: {deal.expectedCloseDate}
       </div>
@@ -45,4 +45,4 @@ const DealCard = ({ deal, getStatusColor }) => {
   );
 };
 
-export default DealCard;
+export default React.memo(DealCard);

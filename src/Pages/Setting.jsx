@@ -3,11 +3,10 @@ import HeadingSubheading from "../components/HeadingSubheading";
 import AccountBar from "../componentpreant/AccountBar";
 import DesablePopUp from "../components/DesablePopUp";
 import { AddButton } from "../components/Button";
+import toast from "react-hot-toast";
 
 const Setting = () => {
   const savedTheme = localStorage.getItem("theme");
-  
-  let [popup, setPopUp] = useState(false);
   let [theme, setTheme] = useState(savedTheme);
   useEffect(() => {
     if (savedTheme) {
@@ -46,15 +45,11 @@ const Setting = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem("userData", JSON.stringify(userInfo));
-    setPopUp(true);
-
-    setTimeout(() => {
-      setPopUp(false);
-    }, 3000);
+    toast.success("Saved successfully ✅");
   };
 
   return (
-    <div className="flex-col gap-6 py-3 flex w-full">
+    <div className="flex-col gap-2 sm:gap-3 md:gap-4 px-2 py-3 flex w-full">
       <div className="w-full">
         <AccountBar />
       </div>
@@ -66,7 +61,7 @@ const Setting = () => {
           />
         </div>
       </div>
-      <div className="h-fit w-full flex items-center justify-center pr-2 bg-background py-6">
+      <div className="h-fit w-full flex items-center justify-center pr-2 bg-background ">
         <form
           onSubmit={handleSubmit}
           className="w-full bg-card-soft p-6 rounded-2xl shadow-(--color-shadow) border border-border flex flex-col gap-4"
@@ -85,7 +80,7 @@ const Setting = () => {
           <div className="flex flex-col items-start gap-1">
             <h1 className="text-lg text-muted">Email Address</h1>
             <input
-              type="text"
+              type="email"
               name="email"
               onChange={handleChange}
               placeholder="jane12@gmail.com"
@@ -125,16 +120,13 @@ const Setting = () => {
               className="px-3 shadow-xs py-2 w-full rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition"
             />
           </div>
-
           <AddButton children={"Save Changes"} type={"submit"} />
-        </form>
-        <DesablePopUp popup={popup} children={"Saved successfully ✅"} />
-      </div>
-      <div className="pr-1">
+        </form></div>
+      <div className="mr-2 mt-3">
         <select
           value={theme}
           onChange={handleThemeChange}
-          className=" w-full px-4 py-2 mb-5 rounded-lg border bg-card-soft  text-foreground border-(--border) focus:outline-none focus:ring-1 focus:ring-foreground cursor-pointer transition"
+          className="w-full px-2 py-2 md:px-4 md:py-4 mb-5 rounded-lg border bg-card-soft  text-foreground border-(--border) focus:outline-none focus:ring-1 focus:ring-foreground cursor-pointer transition"
         >
           <option value="dark">🌙 Dark</option>
           <option value="light">☀️ Light</option>

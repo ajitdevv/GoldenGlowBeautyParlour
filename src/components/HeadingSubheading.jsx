@@ -9,4 +9,4 @@ const HeadingSubheading = ({h1,h2}) => {
   );
 };
 
-export default HeadingSubheading;
+export default React.memo(HeadingSubheading);
