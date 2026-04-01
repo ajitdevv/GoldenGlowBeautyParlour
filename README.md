@@ -220,7 +220,7 @@ npm run dev
 
 ## 🧑‍💻 Author
 
-**AJeet Bairwa (Ajit Dev)**
+**Ajeet Bairwa (Ajit Dev)**
 Frontend Developer
 
 ---
