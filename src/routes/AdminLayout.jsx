@@ -21,8 +21,8 @@ const AdminLayout = () => {
       <div className="flex items-start">
         <Sidebar manuopen={manuopen} setManuopen={setManuopen} />
 
-        <main className="flex-1 min-w-0 min-h-screen flex flex-col">
-          <div className="flex-1 px-3 sm:px-5 lg:px-8 pb-8">
+        <main className="flex-1 min-w-0 max-w-full min-h-screen flex flex-col overflow-x-hidden">
+          <div className="flex-1 px-3 sm:px-5 lg:px-8 pb-8 min-w-0">
             <Outlet />
           </div>
           <Footer />

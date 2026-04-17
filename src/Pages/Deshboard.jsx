@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Getmanufacturers, getProducts } from "../apis/product";
+import { GetDeals, Getmanufacturers, getProducts } from "../apis/product";
 import TotalCards from "../componentpreant/TotalCards";
 import { RevenueGraph } from "../components/RevenueGraph";
 import { ManufacturerChart } from "../components/CategoryChart";
@@ -11,6 +11,7 @@ import { RetryButton } from "../components/Button";
 const Deshboard = () => {
   const [productdata, setproductdata] = useState([]);
   const [manufacturers, setmanufacturers] = useState([]);
+  const [deals, setdeals] = useState([]);
   const [loading, setloading] = useState(true);
   const [err, seterr] = useState(null);
 
@@ -22,12 +23,14 @@ const Deshboard = () => {
     try {
       setloading(true);
       seterr(null);
-      const [products, manufacturers] = await Promise.all([
+      const [products, manufacturers, deals] = await Promise.all([
         getProducts(),
         Getmanufacturers(),
+        GetDeals(),
       ]);
       setproductdata(products.data);
       setmanufacturers(manufacturers.data);
+      setdeals(deals.data);
     } catch (error) {
       console.log(error);
       seterr("Failed to load data");
@@ -83,7 +86,11 @@ const Deshboard = () => {
 
       {!loading && productdata.length > 0 && manufacturers.length > 0 && (
         <div className="flex flex-col gap-5 md:gap-6 animate-fadeUp">
-          <TotalCards productdata={productdata} manufacturers={manufacturers} />
+          <TotalCards
+            productdata={productdata}
+            manufacturers={manufacturers}
+            deals={deals}
+          />
           <RevenueGraph productdata={productdata} />
           <ManufacturerChart productdata={productdata} />
         </div>
