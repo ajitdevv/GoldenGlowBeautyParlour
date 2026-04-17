@@ -1,6 +1,5 @@
 import {
   GithubIcon,
-  Hamburger,
   HomeIcon,
   InstagramIcon,
   Linkedin,
@@ -10,142 +9,129 @@ import {
   Phone,
   ReceiptTextIcon,
   SettingsIcon,
-  X,
   YoutubeIcon,
+  Sparkles,
 } from "lucide-react";
 import weblogo from "../assets/logoAj.png";
 import Themetoggle from "../components/Themetoggle";
-import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Topbar from "./Topbar";
+
 const Sidebar = ({ manuopen, setManuopen }) => {
-  let [selectedItem, setSelectedItem] = useState("Companys");
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
   const ManuItems = [
-    {
-      id: "1",
-      logo: <HomeIcon size={17} />,
-      name: "Home",
-      path: "/admin/dashboard",
-    },
-    {
-      id: "2",
-      logo: <Phone size={17} />,
-      name: "Contact",
-      path: "/admin/contact",
-    },
-    {
-      id: "3",
-      logo: <MapPinHouse size={17} />,
-      name: "Companys",
-      path: "/admin/companys",
-    },
-    {
-      id: "4",
-      logo: <LucidePencilLine size={17} />,
-      name: "Deals",
-      path: "/admin/deals",
-    },
-    {
-      id: "5",
-      logo: <ReceiptTextIcon size={17} />,
-      name: "Reports",
-      path: "/admin/reports",
-    },
-    {
-      id: "6",
-      logo: <SettingsIcon size={17} />,
-      name: "Setting",
-      path: "/admin/setting",
-    },
+    { id: "1", logo: <HomeIcon size={18} />, name: "Home", path: "/admin/dashboard" },
+    { id: "2", logo: <Phone size={18} />, name: "Contact", path: "/admin/contact" },
+    { id: "3", logo: <MapPinHouse size={18} />, name: "Companys", path: "/admin/companys" },
+    { id: "4", logo: <LucidePencilLine size={18} />, name: "Deals", path: "/admin/deals" },
+    { id: "5", logo: <ReceiptTextIcon size={18} />, name: "Reports", path: "/admin/reports" },
+    { id: "6", logo: <SettingsIcon size={18} />, name: "Setting", path: "/admin/setting" },
   ];
+
   const SocialMedia = [
-    { id: "1", logo: <InstagramIcon size={17} /> },
-    { id: "2", logo: <YoutubeIcon size={17} /> },
-    { id: "3", logo: <Linkedin size={17} /> },
-    { id: "4", logo: <GithubIcon size={17} /> },
+    { id: "1", logo: <InstagramIcon size={16} /> },
+    { id: "2", logo: <YoutubeIcon size={16} /> },
+    { id: "3", logo: <Linkedin size={16} /> },
+    { id: "4", logo: <GithubIcon size={16} /> },
   ];
+
   return (
-    <div
+    <aside
       className={`
-    fixed flex w-62 flex-col items-center bg-card-soft h-screen overflow-x-hidden no-scrollbar p-4
-    transition-all duration-300 
-    ${manuopen ? "left-0" : "-left-62"}
-    md:left-0 md:static
-  `}
-      onClick={() => setManuopen(!manuopen)}
+        fixed top-0 z-50 flex h-screen w-64 shrink-0 flex-col bg-card-soft/95 backdrop-blur-xl
+        border-r border-border px-4 py-5 overflow-y-auto no-scrollbar
+        transition-[left] duration-300 ease-out
+        ${manuopen ? "left-0" : "-left-72"}
+        md:sticky md:top-0 md:left-0 md:z-30 md:h-screen md:transition-none
+      `}
+      onClick={() => {
+        if (window.innerWidth < 768) setManuopen(false);
+      }}
     >
-      <div className="flex gap-3 justify-start items-center mt-7">
-        <div className="size-8 ">
-          <img src={weblogo} alt={weblogo} />
+      <div className="flex items-center justify-between mt-1">
+        <div className="flex items-center gap-2.5">
+          <div className="size-9 rounded-xl bg-primary/15 ring-1 ring-primary/30 flex items-center justify-center overflow-hidden">
+            <img src={weblogo} alt="logo" className="size-7 object-contain" />
+          </div>
+          <div className="leading-tight">
+            <h1 className="text-foreground text-base font-semibold tracking-tight">DashBoard</h1>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-muted">Golden Glow</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-foreground text-2xl font-bold">DashBoard</h1>
-        </div>
-      </div>
-      <div className="flex w-full justify-end ">
         <Themetoggle />
       </div>
-      <div className="w-full flex items-start mt-3">
-        <div className="w-fit bg-green-100 font-bold text-xs text-green-400 px-2 py-1 rounded-full flex gap-1">
-          <div className="relative flex items-center justify-center ">
-            <div className="w-1 h-1 bg-green-500 rounded-full z-3"></div>
 
-            <div className="absolute w-1.25 h-1.25 bg-green-400 rounded-full animate-ping opacity-75 z-1"></div>
-            <div className="absolute w-1.5 h-1.5 bg-green-300 rounded-full animate-ping opacity-50 z-2"></div>
-          </div>
-          <div>
-            <h1 className="text-xs">Available for work</h1>
-          </div>
-        </div>
+      <div className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 text-[11px] font-medium text-success ring-1 ring-success/20">
+        <span className="relative flex size-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60"></span>
+          <span className="relative inline-flex size-1.5 rounded-full bg-success"></span>
+        </span>
+        Available for work
       </div>
-      <div className="w-full mt-4">
-        <ul className="space-y-7">
-          {ManuItems.map((item, index) => (
-            <li key={index}>
+
+      <p className="mt-6 mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
+        Workspace
+      </p>
+
+      <nav className="flex-1">
+        <ul className="space-y-1">
+          {ManuItems.map((item) => (
+            <li key={item.id}>
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
-                  `w-full text-left text-sm font-medium transition-colors ${
+                  `group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200
+                  ${
                     isActive
-                      ? "text-foreground"
-                      : "text-muted hover:text-foreground"
+                      ? "bg-primary text-primary-foreground shadow-(--shadow)"
+                      : "text-muted hover:text-foreground hover:bg-card"
                   }`
                 }
               >
-                <div className="flex gap-2 items-center hover:translate-x-8 transition-transform duration-200 hover:scale-110">
-                  <div>{item.logo}</div>
-                  <h1 className="text-sm">{item.name}</h1>
-                </div>
+                {({ isActive }) => (
+                  <>
+                    <span
+                      className={`flex size-7 items-center justify-center rounded-lg transition
+                      ${isActive ? "bg-black/10 text-primary-foreground" : "bg-card text-muted group-hover:text-foreground"}`}
+                    >
+                      {item.logo}
+                    </span>
+                    <span>{item.name}</span>
+                    {isActive && (
+                      <Sparkles size={14} className="ml-auto opacity-70" />
+                    )}
+                  </>
+                )}
               </NavLink>
             </li>
           ))}
         </ul>
-      </div>
-      <hr className="border w-full border-muted my-4" />
-      <div className="flex justify-start w-full">
+      </nav>
+
+      <div className="mt-4 pt-4 border-t border-border space-y-3">
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             localStorage.removeItem("token");
             navigate("/login");
           }}
-          className=" transition-colors flex items-center gap-1 text-sm font-medium text-muted cursor-pointer hover:text-red-500"
+          className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-muted hover:text-danger hover:bg-danger/10 transition cursor-pointer"
         >
-          <LogOutIcon size={17} /> Logout
+          <LogOutIcon size={16} /> Logout
         </button>
+
+        <div className="flex items-center justify-center gap-3 pt-1">
+          {SocialMedia.map((item) => (
+            <button
+              key={item.id}
+              className="size-8 rounded-lg bg-card text-muted hover:text-foreground hover:bg-primary/20 flex items-center justify-center transition"
+            >
+              {item.logo}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="flex gap-4">
-        {SocialMedia.map((item, index) => {
-          return (
-            <div key={index} className="mt-7 gap-3 items-center justify-start">
-              <ul className="text-muted cursor-pointer hover:text-foreground transition-colors">
-                {item.logo}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    </aside>
   );
 };
 

@@ -1,12 +1,20 @@
 export const HomeCard = ({ title, value, logo }) => {
   return (
-    <div className="bg-background flex flex-col text-foreground border border-foreground shadow-(--shadow) p-4 rounded-lg justify-around ">
-      <div className="flex justify-center items-center gap-2">
-        <h3 className="text-base md:text-lg font-semibold whitespace-nowrap">{title}</h3>
-        {logo}
-      </div>
-      <div>
-        <p className="text-lg md:text-2xl font-bold whitespace-nowrap">{value}</p>
+    <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-(--shadow) transition hover:border-primary/40 hover:-translate-y-0.5">
+      <div className="absolute -right-6 -top-6 size-24 rounded-full bg-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+
+      <div className="flex items-start justify-between gap-3 relative">
+        <div className="min-w-0">
+          <p className="text-xs font-medium uppercase tracking-wider text-muted truncate">
+            {title}
+          </p>
+          <p className="mt-2 text-xl md:text-2xl font-semibold tracking-tight text-foreground truncate">
+            {value}
+          </p>
+        </div>
+        <div className="shrink-0 flex size-10 items-center justify-center rounded-xl bg-primary/15 text-accent ring-1 ring-primary/25">
+          {logo}
+        </div>
       </div>
     </div>
   );

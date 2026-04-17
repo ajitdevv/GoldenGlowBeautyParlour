@@ -3,18 +3,21 @@ import { Getmanufacturers } from "../apis/product";
 import AccountBar from "../componentpreant/AccountBar";
 import HeadingSubheading from "../components/HeadingSubheading";
 import CompanyCard from "../components/CompanyCard";
-import video from "/videobg.mp4";
 import { useNavigate } from "react-router-dom";
-import { AddButton } from "../components/Button";
+import { AddButton, RetryButton } from "../components/Button";
 import toast from "react-hot-toast";
+import { Plus } from "lucide-react";
+
 const CompaniesPage = () => {
-  let [companies, setcompanys] = useState([]);
-  let [loader, setloader] = useState(true);
-  let [error, setError] = useState(null);
-  let [companyname, setcompanyname] = useState(null);
+  const [companies, setcompanys] = useState([]);
+  const [loader, setloader] = useState(true);
+  const [error, setError] = useState(null);
+  const Navgation = useNavigate();
+
   useEffect(() => {
     FetchData();
   }, []);
+
   const FetchData = async () => {
     try {
       setloader(true);
@@ -28,76 +31,65 @@ const CompaniesPage = () => {
       setloader(false);
     }
   };
-  let Navgation = useNavigate();
+
   const companiesDeatilePage = (item) => {
-    setcompanyname(item);
     Navgation(`/admin/companies/details/${item.id}`);
   };
-  const AddCompanie=()=>{
-    toast("⚠️ Add New Companie is temporarily disabled")
-    // Navgation("/admin/companie/add+new+companie")/
-  }
+
+  const AddCompanie = () => {
+    toast("⚠️ Add New Companie is temporarily disabled");
+  };
+
   return (
-    <div className="py-3">
-      <div>
-        <AccountBar />
-      </div>
-      <div className="flex justify-around items-center p-2">
+    <div className="flex flex-col gap-6">
+      <AccountBar />
+
+      <div className="flex items-end justify-between gap-3 animate-fadeUp">
         <HeadingSubheading
-          h1={"companies"}
+          h1={"Companies"}
           h2={"Manage your company relationships"}
         />
-       <AddButton onClick={()=>AddCompanie()} children={"+ Add Companie"} />
+        <AddButton onClick={AddCompanie}>
+          <Plus size={16} /> Add Company
+        </AddButton>
       </div>
-      <div className="relative h-full border-t-4 border-blue-200 rounded-2xl w-full overflow-hidden p-10">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-          className="absolute inset-0 top-0 z-0 left-0 w-full h-full rounded-2xl object-cover pointer-events-none"
-        >
-          <source src={video} type="video/mp4" />
-        </video>
-        <div className="z-10 grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full h-full  transform-gpu">
+
+      <div className="rounded-3xl border border-border bg-card-soft/50 p-3 sm:p-5 animate-fadeUp">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {loader &&
-            Array.from({ length: 26 }).map((_, i) => (
+            Array.from({ length: 9 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-white/5 backdrop-blur-lg border border-white/20 rounded-2xl p-6 animate-pulse"
-              >
-                <div className="h-6 w-1/2 bg-gray-400/30 rounded mb-4"></div>
-                <div className="h-4 w-3/4 bg-gray-400/20 rounded mb-2"></div>
-                <div className="h-4 w-2/3 bg-gray-400/20 rounded mb-2"></div>
-                <div className="h-4 w-1/3 bg-gray-400/20 rounded"></div>
-              </div>
+                className="h-52 rounded-2xl border border-border bg-card-soft shimmer"
+              />
             ))}
+
           {!loader && error && (
-            <div className="col-span-full text-center text-red-400">
-              {error}
+            <div className="col-span-full rounded-2xl border border-danger/30 bg-danger/10 p-6 text-center">
+              <p className="text-danger font-medium">{error}</p>
+              <div className="mt-3 flex justify-center">
+                <RetryButton onClick={FetchData}>Retry</RetryButton>
+              </div>
             </div>
           )}
+
           {!loader &&
             !error &&
             companies.length > 0 &&
-            companies.map((item, index) => {
-              return (
-                <div key={index}>
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => companiesDeatilePage(item)}
-                  >
-                    <CompanyCard
-                      Name={item.name}
-                      Category={item.category}
-                      Location={item.country}
-                      ProductsCount={item.productsCount}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+            companies.map((item) => (
+              <div
+                key={item.id}
+                className="cursor-pointer"
+                onClick={() => companiesDeatilePage(item)}
+              >
+                <CompanyCard
+                  Name={item.name}
+                  Category={item.category}
+                  Location={item.country}
+                  ProductsCount={item.productsCount}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

@@ -1,18 +1,19 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Getmanufacturers } from "../apis/product";
 import { ContactCard } from "../components/ContactCard";
 import AccountBar from "../componentpreant/AccountBar";
 import HeadingSubheading from "../components/HeadingSubheading";
 import { useNavigate } from "react-router-dom";
 import { RetryButton } from "../components/Button";
+import { ArrowDownUp } from "lucide-react";
 
 const ContactsPage = () => {
-  let [manufacturerData, setManufacturerData] = useState([]);
-  let [loading, setloading] = useState(true);
-  let [error, seterror] = useState(null);
-  let [filterby, setfilterby] = useState("Normal");
-
+  const [manufacturerData, setManufacturerData] = useState([]);
+  const [loading, setloading] = useState(true);
+  const [error, seterror] = useState(null);
+  const [filterby, setfilterby] = useState("Normal");
   const navigation = useNavigate();
+
   useEffect(() => {
     FetchData();
   }, []);
@@ -40,104 +41,94 @@ const ContactsPage = () => {
       case "ZtoA":
         return b.contact.personName.localeCompare(a.contact.personName);
       case "NewtoOld":
-        return (
-          new Date(b.contact.contactDate) - new Date(a.contact.contactDate)
-        );
+        return new Date(b.contact.contactDate) - new Date(a.contact.contactDate);
       case "OldtoNew":
-        return (
-          new Date(a.contact.contactDate) - new Date(b.contact.contactDate)
-        );
+        return new Date(a.contact.contactDate) - new Date(b.contact.contactDate);
       case "AccordingtoProducts":
         return b.productsCount - a.productsCount;
-
       default:
-        break;
+        return 0;
     }
   });
+
   const handleDetailCard = (item) => {
     navigation(`/admin/companies/details/${item.id}`);
   };
+
   return (
-    <div className="flex-col gap-6 px-2 py-3 items-center  flex w-full">
-      <div className="w-full">
-        <AccountBar />
-      </div>
-      <div className="flex justify-between w-full pr-5">
-        <div className="pr-3">
-          <HeadingSubheading
-            h1={"Contacts"}
-            h2={"Contact Manage your contact relationshipss"}
+    <div className="flex flex-col gap-6">
+      <AccountBar />
+
+      <div className="flex items-end justify-between gap-3 animate-fadeUp">
+        <HeadingSubheading
+          h1={"Contacts"}
+          h2={"Manage your contact relationships"}
+        />
+
+        <div className="relative">
+          <ArrowDownUp
+            size={14}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
           />
-        </div>
-        <div className="relative w-fit">
           <select
+            value={filterby}
             onChange={(e) => setfilterby(e.target.value)}
-            className="w-full text-[10px] md:text-sm  appearance-none bg-card-soft border border-card text-muted rounded-xl px-1 md:px-3 py-1 md:py-2 z-90 shadow-sm focus:outline-none  focus:ring-2  focus:ring-primary cursor-pointer"
+            className="appearance-none rounded-xl border border-border bg-card-soft pl-9 pr-8 py-2 text-sm text-foreground hover:bg-card focus:outline-none focus:ring-2 focus:ring-primary/40 cursor-pointer"
           >
-            <option value="Normal">Normal</option>
+            <option value="Normal">Default order</option>
             <option value="AtoZ">A to Z</option>
             <option value="ZtoA">Z to A</option>
-            <option value="NewtoOld">New To Old</option>
-            <option value="OldtoNew">Old To New</option>
-            <option value="AccordingtoProducts">According To Products</option>
+            <option value="NewtoOld">Newest first</option>
+            <option value="OldtoNew">Oldest first</option>
+            <option value="AccordingtoProducts">By products</option>
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-5">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-fadeUp">
         {loading &&
           Array.from({ length: 6 }).map((_, i) => (
-            <div key={i}>
-              <div className="bg-white rounded-2xl shadow-md border w-65 p-5 animate-pulse">
-                <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-4"></div>
-                <div className="h-4 bg-gray-300 rounded w-5/6 mx-auto mb-6"></div>
+            <div
+              key={i}
+              className="h-56 rounded-2xl border border-border bg-card-soft shimmer"
+            />
+          ))}
 
-                <div className="space-y-3">
-                  <div className="h-4 bg-gray-300 rounded w-full"></div>
-                  <div className="h-4 bg-gray-300 rounded w-3/6"></div>
-                  <div className="h-4 bg-gray-300 rounded w-4/6"></div>
-                  <div className="h-4 bg-gray-300 rounded w-5/6"></div>
-                </div>
-              </div>
+        {!loading && error && (
+          <div className="col-span-full rounded-2xl border border-danger/30 bg-danger/10 p-6 text-center">
+            <p className="text-danger font-medium">{error}</p>
+            <div className="mt-3 flex justify-center">
+              <RetryButton onClick={FetchData}>Retry</RetryButton>
+            </div>
+          </div>
+        )}
+
+        {!loading && !error && sortdata.length === 0 && (
+          <div className="col-span-full text-center text-muted text-sm">
+            No contacts match the {filterby} filter.
+          </div>
+        )}
+
+        {!loading &&
+          !error &&
+          sortdata.length > 0 &&
+          sortdata.map((item) => (
+            <div
+              key={item.id}
+              className="cursor-pointer"
+              onClick={() => handleDetailCard(item)}
+            >
+              <ContactCard
+                position={item.contact.position}
+                Company={item.name}
+                Name={item.contact.personName}
+                Gmail={item.contact.email}
+                contactDate={item.contact.contactDate}
+                phoneNo={item.contact.phone}
+                since={item.contact.since}
+              />
             </div>
           ))}
-      </div>
-
-      {!loading && error && (
-        <div className="col-span-full text-center text-red-400">
-          <div>{error}</div>
-          <div>
-            <RetryButton onClick={() => FetchData()} children={"Retry"} />
-          </div>
-        </div>
-      )}
-      {!loading && !error && sortdata.length === 0 && (
-        <div>{filterby} filter data not founded </div>
-      )}
-      <div className="w-full justify-center flex">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {!loading &&
-            !error &&
-            sortdata.length > 0 &&
-            sortdata.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className="cursor-pointer "
-                  onClick={() => handleDetailCard(item)}
-                >
-                  <ContactCard
-                    position={item.contact.position}
-                    Company={item.name}
-                    Name={item.contact.personName}
-                    Gmail={item.contact.email}
-                    contactDate={item.contact.contactDate}
-                    phoneNo={item.contact.phone}
-                    since={item.contact.since}
-                  />
-                </div>
-              );
-            })}
-        </div>
       </div>
     </div>
   );

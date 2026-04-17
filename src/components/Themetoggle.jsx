@@ -1,43 +1,50 @@
-import { MoonIcon, SunIcon } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { MoonIcon, SunIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 const Themetoggle = () => {
-    
-  let [theme, setTheme] = useState(false);
-  const savedTheme = localStorage.getItem("theme");
-    useEffect(() => {
+  const [theme, setTheme] = useState(false);
 
-    if (savedTheme === "dark") {
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark") {
       setTheme(true);
       document.documentElement.classList.add("dark");
     }
   }, []);
+
   useEffect(() => {
-    if (theme === true) {
+    if (theme) {
       localStorage.setItem("theme", "dark");
       document.documentElement.classList.add("dark");
     } else {
-      localStorage.removeItem("theme");
       localStorage.setItem("theme", "light");
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
-  return (
-    <div className="flex mt-7">
-           <div
-             onClick={() => setTheme(!theme)}
-             className="w-12 h-7 bg-card rounded-full flex items-center px-1 cursor-pointer shadow-(--shadow) transition"
-           >
-             <div
-               className={`size-5 bg-background rounded-full flex items-center justify-center shadow-md transform transition duration-500 ${
-                 theme ? "translate-x-5 rotate-360 " : "translate-x-0"
-               }`}
-             >
-               {theme  ? <MoonIcon  size={15} /> : <SunIcon size={15} />}
-             </div>
-           </div>
-         </div>
-  )
-}
 
-export default Themetoggle
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        setTheme(!theme);
+      }}
+      aria-label="Toggle theme"
+      className="relative size-9 rounded-xl bg-card border border-border flex items-center justify-center text-foreground hover:bg-primary/15 hover:border-primary/40 transition cursor-pointer"
+    >
+      <SunIcon
+        size={16}
+        className={`absolute transition-all duration-500 ${
+          theme ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"
+        }`}
+      />
+      <MoonIcon
+        size={16}
+        className={`absolute transition-all duration-500 ${
+          theme ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"
+        }`}
+      />
+    </button>
+  );
+};
+
+export default Themetoggle;

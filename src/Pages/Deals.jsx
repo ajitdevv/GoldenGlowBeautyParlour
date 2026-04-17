@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { GetDeals } from "../apis/product";
-import { AddButton } from "../components/Button";
+import { AddButton, RetryButton } from "../components/Button";
 import HeadingSubheading from "../components/HeadingSubheading";
 import AccountBar from "../componentpreant/AccountBar";
-import { User2Icon } from "lucide-react";
 import DealCard from "../components/DealCard";
 import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 const Deals = () => {
-  let [deals, setDeals] = useState([]);
-  let [loader, setLoader] = useState(true);
-  let [error, setError] = useState(null);
+  const [deals, setDeals] = useState([]);
+  const [loader, setLoader] = useState(true);
+  const [error, setError] = useState(null);
+  const Navgation = useNavigate();
+
   useEffect(() => {
     FetchData();
   }, []);
+
   const FetchData = async () => {
     try {
       setLoader(true);
@@ -27,102 +30,73 @@ const Deals = () => {
       setLoader(false);
     }
   };
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Active":
-        return "bg-green-500 text-white";
+        return "bg-success/15 text-success ring-1 ring-success/25";
       case "Pending":
-        return "bg-yellow-500 text-white";
+        return "bg-warning/15 text-warning ring-1 ring-warning/25";
       case "Closed":
-        return "bg-red-500 text-white";
+        return "bg-danger/15 text-danger ring-1 ring-danger/25";
       default:
-        return "bg-gray-400 text-black";
+        return "bg-card-soft text-muted ring-1 ring-border";
     }
   };
-  const Navgation = useNavigate();
-  const AddDeal = () => {
-    Navgation("/admin/deals/add+new+deal");
-  };
-  const handleclick=(deal)=>{
-  Navgation(`/admin/deal/${deal._id}`)
-  }
+
+  const AddDeal = () => Navgation("/admin/deals/add+new+deal");
+  const handleclick = (deal) => Navgation(`/admin/deal/${deal._id}`);
+
   return (
-    <div className="flex-col gap-6 px-2 py-3 flex w-full">
-      <div className="w-full">
-        <AccountBar />
+    <div className="flex flex-col gap-6">
+      <AccountBar />
+
+      <div className="flex items-end justify-between gap-3 animate-fadeUp">
+        <HeadingSubheading
+          h1={"Deals Pipeline"}
+          h2={"Track your sales opportunities"}
+        />
+        <AddButton onClick={AddDeal}>
+          <Plus size={16} /> Add Deal
+        </AddButton>
       </div>
-      <div className="flex justify-between w-full pr-5">
-        <div className="pr-3">
-          <HeadingSubheading
-            h1={"Deals Pipeline"}
-            h2={"Track your sales opportunities"}
-          />
-        </div>
-        <div className="relative w-fit">
-          <AddButton children={"Add Deals"} onClick={() => AddDeal()} />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-        {loader && (
-          <div className="w-full min-w-245 max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-white rounded-2xl w-full h-full shadow border p-5 space-y-3 animate-pulse flex flex-col justify-between"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="h-5 w-40 bg-gray-300 rounded"></div>
-                    <div className="h-5 w-20 bg-gray-300 rounded-full"></div>
-                  </div>
 
-                  <div className="flex items-center">
-                    <div className="w-5 h-4 bg-gray-300 rounded-full"></div>
-                    <div className="h-3 w-24 bg-gray-300 rounded"></div>
-                  </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 animate-fadeUp">
+        {loader &&
+          Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-60 rounded-2xl border border-border bg-card-soft shimmer"
+            />
+          ))}
 
-                  <div className="h-px bg-gray-300"></div>
-
-                  <div className="flex justify-between items-center">
-                    <div className="h-3 w-24 bg-gray-300 rounded"></div>
-                    <div className="h-5 w-28 bg-gray-300 rounded"></div>
-                  </div>
-
-                  <div className="h-px bg-gray-300"></div>
-
-                  <div className="flex justify-between items-center">
-                    <div className="h-3 w-32 bg-gray-300 rounded"></div>
-                    <div className="h-6 w-20 bg-gray-300 rounded-full"></div>
-                  </div>
-
-                  <div className="h-3 w-40 bg-gray-300 rounded"></div>
-                </div>
-              ))}
+        {!loader && error && (
+          <div className="col-span-full rounded-2xl border border-danger/30 bg-danger/10 p-6 text-center">
+            <p className="text-danger font-medium">Failed to load deals</p>
+            <div className="mt-3 flex justify-center">
+              <RetryButton onClick={FetchData}>Retry</RetryButton>
             </div>
           </div>
         )}
-        {!loader && error && (
-          <div className="col-span-full text-center text-danger">{error}</div>
-        )}
+
         {!loader && !error && deals.length === 0 && (
-          <div className="col-span-full text-center text-danger">
-            Deals Are Not Found & Not Avalible
+          <div className="col-span-full text-center text-muted text-sm">
+            No deals found yet — create your first one.
           </div>
         )}
+
         {!loader &&
           !error &&
           deals.length > 0 &&
-          deals.map((deal) => {
-            return (
-              <div key={deal._id} onClick={()=>handleclick(deal)
-              } className="bg-background cursor-pointer hover:scale-[1.02] active:scale-[0.98] shadow-(--shadow) rounded-xl flex flex-col gap-1.5 w-full items-start p-5 border hover:shadow-(-shadow) transition">
-                <DealCard
-                  deal={deal}
-                  getStatusColor={getStatusColor}
-                />
-              </div>
-            );
-          })}
+          deals.map((deal) => (
+            <div
+              key={deal._id}
+              onClick={() => handleclick(deal)}
+              className="cursor-pointer rounded-2xl border border-border bg-card p-5 shadow-(--shadow) transition hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_18px_40px_-18px_rgba(224,182,84,0.45)]"
+            >
+              <DealCard deal={deal} getStatusColor={getStatusColor} />
+            </div>
+          ))}
       </div>
     </div>
   );

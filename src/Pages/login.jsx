@@ -1,122 +1,150 @@
 import axios from "axios";
-import { Eye, EyeClosed } from "lucide-react";
+import { Eye, EyeClosed, Lock, LogIn, User } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import weblogo from "../assets/logoAj.png";
+import toast from "react-hot-toast";
 
 export const Login = () => {
-  let [show, setshow] = useState(false);
-  let [checkBox, setCheckBox] = useState(false);
-  let [username, setusername] = useState("");
-  let [password, setpassword] = useState("");
+  const [show, setshow] = useState(false);
+  const [remember, setRemember] = useState(false);
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  let navigation = useNavigate();
-  const handelSubmit = () => {
-    const payload = {
-      username: username,
-      password: password,
-    };
+  const navigation = useNavigate();
+
+  const handelSubmit = (e) => {
+    e?.preventDefault?.();
+    if (!username.trim() || !password.trim()) return;
+
+    setLoading(true);
+    const payload = { username, password };
     axios
       .post("https://admin-apis.vercel.app/login", payload, { withCredentials: true })
       .then((res) => {
         const data = res.data;
         localStorage.setItem(
           "user",
-          JSON.stringify({
-            username: data.username,
-            email: data.email,
-          }),
+          JSON.stringify({ username: data.username, email: data.email })
         );
+        toast.success("Welcome back!");
         navigation("/admin/dashboard");
       })
       .catch((err) => {
         console.log("Status:", err.response?.status);
         console.log("Data:", err.response?.data);
-        console.log("Full Error:", err);
-      });
+        toast.error("Sign in failed");
+      })
+      .finally(() => setLoading(false));
   };
+
+  const disabled = !username.trim() || !password.trim() || loading;
+
   return (
-    <div className="w-full h-screen bg-background flex flex-col justify-center items-center">
-      <div className="bg-background px-12 py-8 w-[90%] md:w-[33%] flex flex-col gap-4 rounded-4xl shadow-(--shadow)">
-        <div className="flex flex-col gap-2">
-          <h1 className="font-bold text-3xl">Sign in</h1>
-          <h2 className="text-sm text-muted">
-            Welcome back! Please sign in to your account
-          </h2>
-        </div>
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col items-start gap-2">
-            <h1 className="font-bold text-sm text-foreground">User Name</h1>
-            <input
-              type="text"
-              onChange={(e) => setusername(e.target.value)}
-              className="bg-card w-full rounded-lg p-2 shadow-md"
-            />
+    <div className="min-h-screen w-full flex items-center justify-center bg-background px-4 py-10">
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 size-96 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute -bottom-40 -right-40 size-96 rounded-full bg-accent/20 blur-3xl" />
+      </div>
+
+      <form
+        onSubmit={handelSubmit}
+        className="w-full max-w-md rounded-3xl border border-border bg-card p-8 shadow-(--shadow) animate-fadeUp"
+      >
+        <div className="flex flex-col items-center text-center">
+          <div className="size-12 rounded-2xl bg-primary/15 ring-1 ring-primary/30 flex items-center justify-center overflow-hidden">
+            <img src={weblogo} alt="logo" className="size-8 object-contain" />
           </div>
-          <div className="flex flex-col items-start gap-2 ">
-            <h1 className="font-bold text-sm text-foreground">Password</h1>
-            <div className="relative w-full">
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-foreground">
+            Welcome back
+          </h1>
+          <p className="mt-1 text-sm text-muted">
+            Sign in to your DashBoard account
+          </p>
+        </div>
+
+        <div className="mt-7 flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-muted">Username</label>
+            <div className="relative">
+              <User
+                size={16}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
+              />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
+                placeholder="Enter your username"
+                className="w-full rounded-xl border border-border bg-card-soft pl-9 pr-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-medium text-muted">Password</label>
+              <button
+                type="button"
+                className="text-xs font-medium text-accent hover:underline"
+              >
+                Forgot?
+              </button>
+            </div>
+            <div className="relative">
+              <Lock
+                size={16}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
+              />
               <input
                 type={show ? "text" : "password"}
+                value={password}
                 onChange={(e) => setpassword(e.target.value)}
-                className=" bg-card w-full rounded-lg p-2 shadow-md"
+                placeholder="••••••••"
+                className="w-full rounded-xl border border-border bg-card-soft pl-9 pr-10 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition"
               />
-              <button onClick={() => setshow(!show)}>
-                {show ? (
-                  <EyeClosed
-                    size={20}
-                    className="absolute top-3 right-2 cursor-pointer"
-                  />
-                ) : (
-                  <Eye
-                    size={20}
-                    className="absolute top-2.5 right-2 cursor-pointer"
-                  />
-                )}
+              <button
+                type="button"
+                onClick={() => setshow(!show)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 size-7 rounded-md hover:bg-card flex items-center justify-center text-muted hover:text-foreground transition"
+              >
+                {show ? <EyeClosed size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>
 
-          <div
-            className={`transition-all duration-300 
-  ${checkBox ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"}`}
-          >
-            <h1 className="font-bold text-sm w-full flex items-start text-foreground">
-              Re-enter Password
-            </h1>
-
+          <label className="flex items-center gap-2 text-xs text-muted cursor-pointer select-none">
             <input
-              type="text"
-              onChange={(e) => setpassword(e.target.value)}
-              className="bg-card w-full rounded-lg p-2 shadow-md"
+              type="checkbox"
+              checked={remember}
+              onChange={() => setRemember(!remember)}
+              className="size-4 accent-primary cursor-pointer"
             />
-          </div>
-          <div
-            className={`transition-all duration-500  ${checkBox ? "translate-y-0 " : "-translate-y-20 "}`}
-          >
-            <label
-              htmlFor="remember-me"
-              className="text-sm flex gap-2 items-center justify-start"
-            >
-              <input
-                type="checkbox"
-                onClick={() => setCheckBox(!checkBox)}
-                id="remember-me"
-                className="ml-2"
-              />
-              <div className="font-bold text-muted"> Remember me</div>
-            </label>
-          </div>
+            Remember me on this device
+          </label>
         </div>
 
         <button
-          onClick={handelSubmit}
-          className={`bg-foreground font-bold text-background w-full rounded-lg p-2 mt-2 transform-transition duration-500 ${
-            !username.trim() || !password.trim() ? "bg-muted text-background cursor-not-allowed" : "bg-foreground text-background  cursor-pointer"
-          } transition-all duration-300  ${checkBox ? "translate-y-0 " : "-translate-y-20 "}`}
+          type="submit"
+          disabled={disabled}
+          className={`mt-6 w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition
+            ${disabled
+              ? "bg-card-soft text-muted cursor-not-allowed"
+              : "bg-primary text-primary-foreground hover:bg-accent-soft active:scale-[0.98] cursor-pointer shadow-(--shadow)"}`}
         >
-          Sign in
+          {loading ? (
+            <span className="size-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <LogIn size={15} />
+          )}
+          {loading ? "Signing in..." : "Sign in"}
         </button>
-      </div>
+
+        <p className="mt-5 text-center text-xs text-muted">
+          Protected by Golden Glow · v1.0
+        </p>
+      </form>
     </div>
   );
 };

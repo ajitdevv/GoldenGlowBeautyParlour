@@ -5,23 +5,30 @@ import Topbar from "../componentpreant/Topbar";
 import Footer from "../Pages/Footer";
 
 const AdminLayout = () => {
-  let [manuopen, setManuopen] = useState(false);
+  const [manuopen, setManuopen] = useState(false);
+
   return (
-    <>
+    <div className="min-h-screen bg-background text-foreground">
       <Topbar setManuopen={setManuopen} manuopen={manuopen} />
-      <div className="flex h-screen overflow-hidden gap-5">
-        <div className=" fixed z-100 shrink-0">
-          <Sidebar manuopen={manuopen} setManuopen={setManuopen} />
-        </div>
+
+      {manuopen && (
         <div
-          className="flex-1 md:ml-[22.5%] bg-background overflow-y-auto  min-h-screen "
           onClick={() => setManuopen(false)}
-        >
-          <Outlet />
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px] md:hidden"
+        />
+      )}
+
+      <div className="flex items-start">
+        <Sidebar manuopen={manuopen} setManuopen={setManuopen} />
+
+        <main className="flex-1 min-w-0 min-h-screen flex flex-col">
+          <div className="flex-1 px-3 sm:px-5 lg:px-8 pb-8">
+            <Outlet />
+          </div>
           <Footer />
-        </div>
+        </main>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -2,25 +2,45 @@ import React, { useEffect, useState } from "react";
 import { GetReports } from "../apis/product";
 import AccountBar from "../componentpreant/AccountBar";
 import HeadingSubheading from "../components/HeadingSubheading";
-import { Bug } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import FilterBar from "../components/FilterBar";
+import { RetryButton } from "../components/Button";
+
+const statusBadge = (s) =>
+  s === "pending"
+    ? "bg-warning/15 text-warning ring-1 ring-warning/25"
+    : s === "in-progress"
+      ? "bg-info/15 text-info ring-1 ring-info/25"
+      : s === "resolved"
+        ? "bg-success/15 text-success ring-1 ring-success/25"
+        : "bg-card-soft text-muted ring-1 ring-border";
+
+const priorityBadge = (p) =>
+  p === "low"
+    ? "bg-card-soft text-muted ring-1 ring-border"
+    : p === "medium"
+      ? "bg-warning/15 text-warning ring-1 ring-warning/25"
+      : p === "high"
+        ? "bg-danger/15 text-danger ring-1 ring-danger/25"
+        : "bg-card-soft text-muted ring-1 ring-border";
 
 const Reports = () => {
-  let [reportsData, setReportsData] = useState([]);
-  let [loader, setLoader] = useState(true);
-  let [error, setError] = useState(null);
-  let [appliedFilter, setAppliedFilter] = useState(null);
-  let [filter, setFilter] = useState({
+  const [reportsData, setReportsData] = useState([]);
+  const [loader, setLoader] = useState(true);
+  const [error, setError] = useState(null);
+  const [appliedFilter, setAppliedFilter] = useState(null);
+  const [filter, setFilter] = useState({
     type: "",
     status: "",
     priority: "",
     username: "",
   });
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchReports();
   }, []);
+
   const fetchReports = async () => {
     try {
       setLoader(true);
@@ -34,52 +54,38 @@ const Reports = () => {
       setLoader(false);
     }
   };
+
   const FilterReports = appliedFilter
-    ? reportsData.filter((item) => {
-        return (
+    ? reportsData.filter(
+        (item) =>
           (!appliedFilter.type || item.type === appliedFilter.type) &&
           (!appliedFilter.status || item.status === appliedFilter.status) &&
-          (!appliedFilter.priority ||
-            item.priority === appliedFilter.priority) &&
+          (!appliedFilter.priority || item.priority === appliedFilter.priority) &&
           (!appliedFilter.username ||
-            item.user.name
-              .toLowerCase()
-              .includes(appliedFilter.username.toLowerCase()))
-        );
-      })
+            item.user.name.toLowerCase().includes(appliedFilter.username.toLowerCase()))
+      )
     : reportsData;
 
-  const handleChange = (e) => {
-    setFilter({ ...filter, [e.target.name]: e.target.value });
-  };
-  const handleApply = () => {
-    setAppliedFilter(filter);
-  };
+  const handleChange = (e) => setFilter({ ...filter, [e.target.name]: e.target.value });
+  const handleApply = () => setAppliedFilter(filter);
   const handleReset = () => {
     setAppliedFilter(null);
-    setFilter({
-      type: "",
-      status: "",
-      priority: "",
-      username: "",
-    });
+    setFilter({ type: "", status: "", priority: "", username: "" });
   };
-  const handleFullView = (item) => {
-    navigate(`/admin/report/${item._id}`);
-  };
+  const handleFullView = (item) => navigate(`/admin/report/${item._id}`);
 
   return (
-    <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 px-2">
-      <div>
-        <AccountBar />
-      </div>
-      <div>
+    <div className="flex flex-col gap-5">
+      <AccountBar />
+
+      <div className="animate-fadeUp">
         <HeadingSubheading
           h1={"Reports"}
           h2={"Browse and manage available reports"}
         />
       </div>
-      <div className="flex items-center p-2 md:p-4 bg-background rounded-2xl border border-border/90">
+
+      <div className="rounded-2xl border border-border bg-card p-3 md:p-4 shadow-(--shadow) animate-fadeUp">
         <FilterBar
           filter={filter}
           handleChange={handleChange}
@@ -87,104 +93,78 @@ const Reports = () => {
           handleReset={handleReset}
         />
       </div>
-      {loader && (
-        <div className="overflow-x-auto mt-4 rounded-xl border border-border">
-          <table className="min-w-full table-auto text-left">
-            <thead className="bg-card-soft">
+
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-(--shadow) animate-fadeUp">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-sm">
+            <thead className="bg-card-soft text-muted text-xs uppercase tracking-wider">
               <tr>
-                <th className="px-4 text-xs md:text-base py-3">User ID</th>
-                <th className="px-4 text-xs md:text-base py-3">User</th>
-                <th className="px-4 text-xs md:text-base py-3">Type</th>
-                <th className="px-4 text-xs md:text-base py-3">Status</th>
-                <th className="px-4 text-xs md:text-base py-3">Priority</th>
+                <th className="px-4 py-3 font-medium">Report ID</th>
+                <th className="px-4 py-3 font-medium">User</th>
+                <th className="px-4 py-3 font-medium">Type</th>
+                <th className="px-4 py-3 font-medium">Status</th>
+                <th className="px-4 py-3 font-medium">Priority</th>
               </tr>
             </thead>
 
             <tbody>
               {loader &&
-                Array.from({ length: 10 }).map((_, i) => (
-                  <tr key={i} className="border-t animate-pulse">
-                    <td className="px-2 py-3">
-                      <div className="h-5 w-15 md:w-20 bg-gray-300 rounded"></div>
+                Array.from({ length: 8 }).map((_, i) => (
+                  <tr key={i} className="border-t border-border">
+                    {Array.from({ length: 5 }).map((__, j) => (
+                      <td key={j} className="px-4 py-3">
+                        <div className="h-5 w-20 rounded bg-card-soft shimmer" />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+
+              {!loader &&
+                !error &&
+                FilterReports.map((item) => (
+                  <tr
+                    onClick={() => handleFullView(item)}
+                    key={item._id}
+                    className="border-t border-border hover:bg-card-soft/60 cursor-pointer transition"
+                  >
+                    <td className="px-4 py-3">
+                      <span className="inline-flex items-center rounded-md bg-foreground/90 text-background px-2 py-0.5 text-xs font-mono">
+                        {item.reportId}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-foreground">{item.user?.name}</td>
+                    <td className="px-4 py-3 capitalize text-muted">{item.type}</td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${statusBadge(item.status)}`}>
+                        {item.status}
+                      </span>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="h-5 w-10 md:w-40 bg-gray-300 rounded"></div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="h-5 w-12 md:w-24 bg-gray-300 rounded"></div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="h-7 w-14 md:w-28 bg-gray-300 rounded-full"></div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="h-7 w-10 md:w-20 bg-gray-300 rounded-full"></div>
+                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${priorityBadge(item.priority)}`}>
+                        {item.priority}
+                      </span>
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
         </div>
-      )}
 
-      {!loader && error && (
-        <div className=" text-red-500 text-2xl">{error}</div>
-      )}
-      {!loader && !error && FilterReports.length === 0 && (
-        <div>
-          <div>No reports found. Try adjusting filters or create a new one</div>
-        </div>
-      )}
-      {!loader && !error && FilterReports.length > 0 && (
-        <div className="overflow-x-auto mt-4 rounded-xl border border-border">
-          <table className="min-w-full table-auto text-left">
-            <thead className="bg-card-soft ">
-              <tr>
-                <th className="px-4 text-xs md:text-base py-3">User ID</th>
-                <th className="px-4 text-xs md:text-base py-3">User</th>
-                <th className="px-4 text-xs md:text-base py-3">Type</th>
-                <th className="px-4 text-xs md:text-base py-3">Status</th>
-                <th className="px-4 text-xs md:text-base py-3">Priority</th>
-              </tr>
-            </thead>
-            <tbody className="">
-              {FilterReports.map((item) => (
-                <tr
-                  onClick={() => handleFullView(item)}
-                  key={item._id}
-                  className="border-t hover:bg-card-soft cursor-pointer scale-100 hover:scale-101 transition-all duration-300"
-                >
-                  <td className="px-2 py-2.5">
-                    <div className="bg-foreground text-xs md:text-base text-background rounded-sm w-fit px-2 py-0.5">
-                      {item.reportId}
-                    </div>
-                  </td>
-                  <td className="px-4 text-xs md:text-base py-3">
-                    {item.user?.name}
-                  </td>
-                  <td className="px-4 text-xs md:text-base py-3 capitalize">
-                    {item.type}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`px-2 py-1 rounded text-xs ${item.status === "pending" && "bg-yellow-100 text-yellow-700"} ${item.status === "in-progress" && "bg-blue-100 text-blue-700"} ${item.status === "resolved" && "bg-green-100 text-green-700"}`}
-                    >
-                      {item.status}
-                    </span>
-                  </td>
+        {!loader && error && (
+          <div className="p-6 text-center">
+            <p className="text-danger font-medium">{error}</p>
+            <div className="mt-3 flex justify-center">
+              <RetryButton onClick={fetchReports}>Retry</RetryButton>
+            </div>
+          </div>
+        )}
 
-                  <td className="px-4 py-3">
-                    <span
-                      className={`px-2 py-1 rounded text-xs ${item.priority === "low" && "bg-gray-100 text-gray-700"} ${item.priority === "medium" && "bg-orange-100 text-orange-700"} ${item.priority === "high" && "bg-red-100 text-red-700"}`}
-                    >
-                      {item.priority}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+        {!loader && !error && FilterReports.length === 0 && (
+          <div className="p-8 text-center text-muted text-sm">
+            No reports found. Try adjusting filters.
+          </div>
+        )}
+      </div>
     </div>
   );
 };

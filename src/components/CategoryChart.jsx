@@ -14,63 +14,66 @@ export const ManufacturerChart = ({ productdata }) => {
     if (!Manufacturer[product.manufacturer]) {
       Manufacturer[product.manufacturer] = 0;
     }
-    Manufacturer[product.manufacturer] +=
-      product.stockSold * product.revenuePerUnit;
+    Manufacturer[product.manufacturer] += product.stockSold * product.revenuePerUnit;
   });
 
-  let ArrayOfManufacturer = Object.keys(Manufacturer).map((key) => ({
+  const ArrayOfManufacturer = Object.keys(Manufacturer).map((key) => ({
     name: key,
     value: Manufacturer[key],
   }));
-  let TopManufacturers = ArrayOfManufacturer.sort((a, b) => b.value - a.value);
-  let Top5Manufacturers = TopManufacturers.slice(0, 5);
-  let OthersManufacturers = TopManufacturers.slice(5);
-  const othersValue = OthersManufacturers.reduce(
-    (sum, item) => sum + item.value,
-    0,
-  );
+  const TopManufacturers = ArrayOfManufacturer.sort((a, b) => b.value - a.value);
+  const Top5Manufacturers = TopManufacturers.slice(0, 5);
+  const OthersManufacturers = TopManufacturers.slice(5);
+  const othersValue = OthersManufacturers.reduce((sum, item) => sum + item.value, 0);
   if (othersValue > 0) {
-    Top5Manufacturers.push({
-      name: "Others",
-      value: othersValue,
-    });
+    Top5Manufacturers.push({ name: "Others", value: othersValue });
   }
-  console.log(OthersManufacturers);
-  console.log(Top5Manufacturers);
-  const COLORS = [
-    "#3b82f6",
-    "#22c55e",
-    "#f97316",
-    "#e11d48",
-    "#a855f7",
-    "#14b8a6",
-  ];
+
+  const COLORS = ["#E0B654", "#7A5A1F", "#22C55E", "#3B82F6", "#A855F7", "#94A3B8"];
+
   return (
-    <div className="border rounded-lg border-foreground">
-      <div className="flex items-start p-4">
-        <h1 className="text-2xl text-foreground ">
-            Top 5 Manufacturers
-        </h1>
+    <div className="rounded-2xl border border-border bg-card p-4 md:p-5 shadow-(--shadow)">
+      <div className="flex items-start justify-between mb-4">
+        <div>
+          <h3 className="text-base md:text-lg font-semibold tracking-tight text-foreground">
+            Top Manufacturers
+          </h3>
+          <p className="text-xs text-muted mt-0.5">By revenue contribution</p>
+        </div>
+        <span className="hidden sm:inline-flex items-center rounded-full bg-primary/15 px-2.5 py-1 text-[11px] font-medium text-accent ring-1 ring-primary/25">
+          Top 5 + Others
+        </span>
       </div>
-      <div className="w-full h-100 ">
+
+      <div className="w-full h-72 md:h-80">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={Top5Manufacturers}
               dataKey="value"
-              outerRadius="50%"
-              label
-              fill="#8884d8"
+              outerRadius="70%"
+              innerRadius="42%"
+              paddingAngle={3}
+              stroke="var(--card)"
+              strokeWidth={2}
+              label={({ name }) => name}
+              labelLine={false}
             >
-              {Top5Manufacturers.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
+              {Top5Manufacturers.map((_, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip formatter={(value) => `₹${value.toLocaleString()}`} />
-            <Legend />
+            <Tooltip
+              formatter={(value) => `₹${value.toLocaleString()}`}
+              contentStyle={{
+                background: "var(--card)",
+                border: "1px solid var(--border)",
+                borderRadius: 12,
+                fontSize: 12,
+                color: "var(--foreground)",
+              }}
+            />
+            <Legend wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
           </PieChart>
         </ResponsiveContainer>
       </div>

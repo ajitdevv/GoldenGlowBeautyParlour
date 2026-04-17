@@ -1,26 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetReports } from "../apis/product";
-import { Tag } from "lucide-react";
 import { ReportUpdate } from "../apis/updatedata";
 import { SaveButton } from "../components/Button";
-import DesablePopUp from "../components/DesablePopUp";
+import AccountBar from "../componentpreant/AccountBar";
+import HeadingSubheading from "../components/HeadingSubheading";
 import toast from "react-hot-toast";
+import { ArrowLeft, Mail, User2 } from "lucide-react";
+
+const statusBadge = (s) =>
+  s === "pending"
+    ? "bg-warning/15 text-warning ring-1 ring-warning/25"
+    : s === "in-progress"
+      ? "bg-info/15 text-info ring-1 ring-info/25"
+      : s === "resolved"
+        ? "bg-success/15 text-success ring-1 ring-success/25"
+        : "bg-card-soft text-muted ring-1 ring-border";
+
+const priorityBadge = (p) =>
+  p === "low"
+    ? "bg-card-soft text-muted ring-1 ring-border"
+    : p === "medium"
+      ? "bg-warning/15 text-warning ring-1 ring-warning/25"
+      : p === "high"
+        ? "bg-danger/15 text-danger ring-1 ring-danger/25"
+        : "bg-card-soft text-muted ring-1 ring-border";
 
 const ReportFullView = () => {
-  let [loading, setLoading] = useState(true);
-  let [data, setData] = useState([]);
-  let [error, setError] = useState(null);
-  let [urloading, setURLoading] = useState(false);
-  let [popup, setPopUp] = useState(false);
-  let [updateForm, setUpdateForm] = useState({
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [urloading, setURLoading] = useState(false);
+  const [updateForm, setUpdateForm] = useState({
     status: "",
     priority: "",
     description: "",
   });
+  const navigation = useNavigate();
+
   useEffect(() => {
     Fatchdata();
   }, []);
+
   const Fatchdata = async () => {
     try {
       setLoading(true);
@@ -33,33 +54,14 @@ const ReportFullView = () => {
       setLoading(false);
     }
   };
+
   const handleChange = (e) => {
-    setUpdateForm((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setUpdateForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleReportUpdate = async () => {
-    try {
-      setURLoading(true);
-      const edits = {
-        reportId: SelectedReport.reportId,
-        ...updateForm,
-      };
-      await ReportUpdate({
-        id: SelectedReport._id,
-        edits,
-      });
-      toast.success("Edit successfully ✅")
-    } catch (error) {
-      console.log("Report not updated", error);
-      throw error;
-    } finally {
-      setURLoading(false);
-    }
-  };
+
   const { _id } = useParams();
   const SelectedReport = data.find((item) => item._id === _id);
+
   useEffect(() => {
     if (SelectedReport) {
       setUpdateForm({
@@ -69,223 +71,208 @@ const ReportFullView = () => {
       });
     }
   }, [SelectedReport]);
+
+  const handleReportUpdate = async () => {
+    try {
+      setURLoading(true);
+      const edits = { reportId: SelectedReport.reportId, ...updateForm };
+      await ReportUpdate({ id: SelectedReport._id, edits });
+      toast.success("Edit successfully ✅");
+    } catch (error) {
+      console.log("Report not updated", error);
+      throw error;
+    } finally {
+      setURLoading(false);
+    }
+  };
+
+  const inputClass =
+    "w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition";
+
   return (
-    <div>
+    <div className="flex flex-col gap-6">
+      <AccountBar />
+
+      <div className="flex items-center justify-between gap-3 animate-fadeUp">
+        <HeadingSubheading
+          h1={"Report Details"}
+          h2={"Review the report and take admin action"}
+        />
+        <button
+          onClick={() => navigation(-1)}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border bg-card-soft px-3 py-1.5 text-sm text-muted hover:text-foreground hover:bg-card transition cursor-pointer"
+        >
+          <ArrowLeft size={16} /> Back
+        </button>
+      </div>
+
       {loading && (
-        <div className="space-y-6 mt-8 animate-pulse">
-          <div className="bg-white rounded-2xl shadow p-5 space-y-4">
-            <div className="h-6 bg-gray-300 rounded w-1/2"></div>
-
-            <div className="flex gap-3">
-              <div className="h-7 w-20 bg-gray-300 rounded-full"></div>
-              <div className="h-7 w-16 bg-gray-300 rounded-full"></div>
+        <div className="space-y-4">
+          <div className="h-24 rounded-2xl border border-border bg-card-soft shimmer" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="lg:col-span-2 space-y-4">
+              <div className="h-40 rounded-2xl border border-border bg-card-soft shimmer" />
+              <div className="h-56 rounded-2xl border border-border bg-card-soft shimmer" />
             </div>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white rounded-2xl shadow p-5 space-y-4">
-                <div className="h-5 bg-gray-300 rounded w-40"></div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 w-32 bg-gray-300 rounded"></div>
-                    <div className="h-3 w-40 bg-gray-300 rounded"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white rounded-2xl shadow p-5 space-y-4">
-                <div className="h-5 bg-gray-300 rounded w-48"></div>
-
-                <div className="space-y-2">
-                  <div className="h-4 w-32 bg-gray-300 rounded"></div>
-                  <div className="h-4 w-40 bg-gray-300 rounded"></div>
-                </div>
-
-                <div className="space-y-2 mt-4">
-                  <div className="h-4 w-28 bg-gray-300 rounded"></div>
-                  <div className="h-4 w-full bg-gray-300 rounded"></div>
-                  <div className="h-4 w-5/6 bg-gray-300 rounded"></div>
-                </div>
-              </div>
-              <div className="bg-white rounded-2xl shadow p-5 space-y-4">
-                <div className="h-5 bg-gray-300 rounded w-32 mx-auto"></div>
-                <div className="h-32 bg-gray-300 rounded-lg"></div>
-              </div>
-            </div>
-            <div className="bg-white rounded-2xl shadow p-5 space-y-6">
-              <div className="h-5 bg-gray-300 rounded w-40"></div>
-              <div className="space-y-2">
-                <div className="h-4 w-20 bg-gray-300 rounded"></div>
-                <div className="h-10 bg-gray-300 rounded-xl"></div>
-              </div>
-              <div className="space-y-2">
-                <div className="h-4 w-20 bg-gray-300 rounded"></div>
-                <div className="h-10 bg-gray-300 rounded-xl"></div>
-              </div>
-              <div className="space-y-2">
-                <div className="h-4 w-32 bg-gray-300 rounded"></div>
-                <div className="h-24 bg-gray-300 rounded-xl"></div>
-              </div>
-              <div className="h-12 bg-gray-300 rounded-xl"></div>
-            </div>
+            <div className="h-96 rounded-2xl border border-border bg-card-soft shimmer" />
           </div>
         </div>
       )}
-      {!loading && error && (
-        <div className="bg-red-300 text-black">{error}</div>
-      )}
-      {!loading && !error && !SelectedReport && (
-        <div className="bg-blue-300 text-black">not found</div>
-      )}
-      {!loading && !error && SelectedReport && (
-        <div>
-          <div className="p-6 bg-card/50 min-h-screen">
-            <div className="bg-card-soft rounded-md shadow p-5 mb-6 flex flex-col items-start gap-2">
-              <h1 className="text-lg font-semibold text-foreground">
-                Report ID:{" "}
-                <span className="font-bold text-blue-600">
-                  {SelectedReport.reportId}
-                </span>{" "}
-                - {SelectedReport.title}
-              </h1>
 
+      {!loading && error && (
+        <div className="rounded-2xl border border-danger/30 bg-danger/10 p-6 text-center text-danger">
+          {String(error)}
+        </div>
+      )}
+
+      {!loading && !error && !SelectedReport && (
+        <div className="rounded-2xl border border-border bg-card p-6 text-center text-muted">
+          Report not found.
+        </div>
+      )}
+
+      {!loading && !error && SelectedReport && (
+        <div className="space-y-5 animate-fadeUp">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-(--shadow)">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-muted">Report</p>
+                <h1 className="mt-1 text-lg md:text-xl font-semibold text-foreground">
+                  <span className="font-mono text-info">{SelectedReport.reportId}</span>
+                  <span className="mx-2 text-muted">·</span>
+                  {SelectedReport.title}
+                </h1>
+              </div>
               <div className="flex gap-2">
-                <span className="px-3 py-1 text-xs rounded-md bg-yellow-400 text-yellow-800 font-medium">
+                <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${statusBadge(SelectedReport.status)}`}>
                   {SelectedReport.status}
                 </span>
-                <span className="px-3 py-1 text-xs rounded-md bg-red-400 text-red-900 font-medium">
+                <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${priorityBadge(SelectedReport.priority)}`}>
                   {SelectedReport.priority}
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2 space-y-6">
-                <div className="bg-card-soft p-5 rounded-xl shadow">
-                  <h2 className="font-semibold flex items-start text-foreground mb-3">
-                    User Information
-                  </h2>
-                  <hr className="mb-4" />
+          </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-full bg-foreground/30 flex items-center justify-center text-xl font-bold text-background">
-                      {SelectedReport.user?.name?.charAt(0)}
-                    </div>
-
-                    <div className="flex flex-col items-start">
-                      <h3 className="font-semibold text-foreground">
-                        {SelectedReport.user.name}
-                      </h3>
-                      <p className="text-sm text-foreground/60">
-                        {SelectedReport.user.email}
-                      </p>
-                    </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <div className="lg:col-span-2 space-y-5">
+              <Section title="User Information">
+                <div className="flex items-center gap-4">
+                  <div className="flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground text-lg font-bold">
+                    {SelectedReport.user?.name?.charAt(0)}
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
+                      <User2 size={14} className="text-muted" />
+                      {SelectedReport.user.name}
+                    </h3>
+                    <p className="text-xs text-muted flex items-center gap-1.5 mt-1">
+                      <Mail size={12} />
+                      {SelectedReport.user.email}
+                    </p>
                   </div>
                 </div>
+              </Section>
 
-                <div className="bg-card-soft flex flex-col items-start  p-5 rounded-xl shadow">
-                  <h2 className="font-semibold text-foreground mb-3">
-                    Report Information
-                  </h2>
-                  <hr className="mb-4 h-px bg-muted w-full" />
-                  <p className="text-sm text-foreground/80">
-                    <span className="font-medium">Type:</span>{" "}
-                    {SelectedReport.type?.charAt().toUpperCase() +
-                      SelectedReport.type?.slice(1)}
-                  </p>
-                  <p className="text-sm text-foreground/80">
-                    <span className="font-medium">Target:</span>
-                    {SelectedReport.targetType?.charAt().toUpperCase() +
-                      SelectedReport.targetType?.slice(1)}
-                  </p>
-
-                  <hr className="h-px my-2 bg-muted w-full" />
-
-                  <h3 className="font-medium text-foreground/80 mb-1">
-                    Description:
-                  </h3>
-                  <p className="text-sm text-foreground/50">
+              <Section title="Report Information">
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Type" value={SelectedReport.type} />
+                  <Field label="Target" value={SelectedReport.targetType} />
+                </div>
+                <div className="mt-3 rounded-xl bg-card-soft p-3">
+                  <p className="text-xs font-medium text-muted">Description</p>
+                  <p className="mt-1 text-sm text-foreground/90 leading-relaxed">
                     {SelectedReport.description}
                   </p>
                 </div>
+              </Section>
 
-                <div className="bg-card-soft p-5 rounded-xl shadow">
-                  <h2 className="font-semibold text-foreground/80 mb-3">
-                    Attachment
-                  </h2>
-                  <hr className="h-px my-2 bg-muted w-full" />
-
+              {SelectedReport.attachment && (
+                <Section title="Attachment">
                   <img
                     src={SelectedReport.attachment}
                     alt="attachment"
-                    className="rounded-lg border"
+                    className="rounded-xl border border-border max-h-96 object-contain bg-card-soft"
                   />
-                </div>
-              </div>
-              {/*  Admin Action */}
-              <div className="bg-card-soft w-full flex flex-col gap-2 items-start p-5 rounded-xl shadow h-fit">
-                <h2 className="font-semibold text-foreground/80">
-                  Admin Actions
-                </h2>
-                <hr className="h-px bg-muted w-full" />
-                <div className="mb-4 flex flex-col gap-4 items-start">
-                  <label className="text-sm text-foreground/80">Status</label>
-                  <select
-                    name="status"
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-lg text-sm"
-                  >
-                    <option className="bg-blue-400 text-black" disabled>
-                      {SelectedReport.status}
-                    </option>
-                    <option>pending</option>
-                    <option>resolved</option>
-                    <option>rejected</option>
-                  </select>
-                </div>
-                <hr className="h-px bg-muted w-full" />
-
-                <div className="mb-4 flex flex-col gap-4 items-start">
-                  <label className="text-sm text-foreground/80">Priority</label>
-                  <select
-                    name="priority"
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-lg text-sm"
-                  >
-                    <option className="bg-blue-400 text-black" disabled>
-                      {SelectedReport.priority}
-                    </option>
-                    <option>low</option>
-                    <option>medium</option>
-                    <option>high</option>
-                  </select>
-                </div>
-                <hr className="h-px bg-muted w-full" />
-                <div className="mb-4 flex flex-col gap-4 items-start">
-                  <label className="text-sm text-foreground/80">
-                    Internal Notes
-                  </label>
-                  <textarea
-                    name="description"
-                    onChange={handleChange}
-                    className="w-full border rounded-lg p-2 bg-card/50 text-sm"
-                    placeholder="Add internal note..."
-                  />
-                </div>
-                <hr className="h-px my-2 bg-muted w-full" />
-                <SaveButton
-                  onClick={() => handleReportUpdate()}
-                  urloading={urloading}
-                  style={"w-full px-1"}
-                >
-                  Save Note
-                </SaveButton>
-              </div>
+                </Section>
+              )}
             </div>
-          </div></div>
+
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-(--shadow) h-fit space-y-4">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">
+                Admin Actions
+              </h2>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-muted">Status</label>
+                <select
+                  name="status"
+                  value={updateForm.status}
+                  onChange={handleChange}
+                  className={inputClass}
+                >
+                  <option value="pending">pending</option>
+                  <option value="in-progress">in-progress</option>
+                  <option value="resolved">resolved</option>
+                  <option value="rejected">rejected</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-muted">Priority</label>
+                <select
+                  name="priority"
+                  value={updateForm.priority}
+                  onChange={handleChange}
+                  className={inputClass}
+                >
+                  <option value="low">low</option>
+                  <option value="medium">medium</option>
+                  <option value="high">high</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-muted">Internal Notes</label>
+                <textarea
+                  name="description"
+                  value={updateForm.description}
+                  onChange={handleChange}
+                  rows={4}
+                  className={`${inputClass} resize-none`}
+                  placeholder="Add internal note..."
+                />
+              </div>
+
+              <SaveButton
+                onClick={handleReportUpdate}
+                urloading={urloading}
+                style="w-full"
+              >
+                Save Note
+              </SaveButton>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
 };
+
+const Section = ({ title, children }) => (
+  <div className="rounded-2xl border border-border bg-card p-5 shadow-(--shadow)">
+    <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">
+      {title}
+    </h2>
+    {children}
+  </div>
+);
+
+const Field = ({ label, value }) => (
+  <div className="rounded-xl border border-border bg-card-soft px-3 py-2">
+    <p className="text-[10px] uppercase tracking-wider text-muted">{label}</p>
+    <p className="mt-0.5 text-sm font-medium text-foreground capitalize">{value}</p>
+  </div>
+);
 
 export default ReportFullView;
