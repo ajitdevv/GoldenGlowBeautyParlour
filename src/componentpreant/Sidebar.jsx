@@ -55,7 +55,6 @@ const Sidebar = ({ manuopen, setManuopen }) => {
           </div>
           <div className="leading-tight">
             <h1 className="text-foreground text-base font-semibold tracking-tight">DashBoard</h1>
-            <p className="text-[10px] uppercase tracking-[0.18em] text-muted">Golden Glow</p>
           </div>
         </div>
         <Themetoggle />

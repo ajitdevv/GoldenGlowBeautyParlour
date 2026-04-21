@@ -83,8 +83,60 @@ const CompaniesDetails = () => {
       </div>
 
       {loading && (
-        <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-card p-8 shadow-(--shadow)">
-          <div className="h-72 rounded-2xl bg-card-soft shimmer" />
+        <div className="mx-auto max-w-4xl animate-fadeUp">
+          <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-(--shadow)">
+            <div className="h-32 bg-card-soft shimmer" />
+
+            <div className="relative px-6 md:px-8 pb-8">
+              <div className="-mt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                <div className="flex items-end gap-4">
+                  <div className="size-24 rounded-2xl border-4 border-card bg-card-soft shimmer" />
+                  <div className="pb-1 space-y-2">
+                    <div className="h-8 md:h-9 w-56 rounded-md bg-card-soft shimmer" />
+                    <div className="h-5 w-40 rounded-md bg-card-soft shimmer" />
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <div className="h-9 w-21 rounded-xl bg-card-soft shimmer" />
+                  <div className="h-9 w-24 rounded-xl bg-card-soft shimmer" />
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <div className="h-6 w-32 rounded-full bg-card-soft shimmer" />
+                <div className="h-6 w-28 rounded-full bg-card-soft shimmer" />
+                <div className="h-6 w-16 rounded-full bg-card-soft shimmer" />
+              </div>
+
+              <div className="my-6 h-px bg-border" />
+
+              <div className="h-4 w-36 rounded-md bg-card-soft shimmer mb-4" />
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-1 rounded-2xl border border-border bg-card-soft p-5 flex flex-col items-center text-center">
+                  <div className="size-20 rounded-2xl bg-card shimmer" />
+                  <div className="mt-3 h-5 w-28 rounded-md bg-card shimmer" />
+                  <div className="mt-2 h-4 w-20 rounded-md bg-card shimmer" />
+                </div>
+
+                <div className="md:col-span-2 grid grid-cols-1 gap-3">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="size-7 rounded-md bg-card-soft shimmer" />
+                        <div className="h-4 w-16 rounded-md bg-card-soft shimmer" />
+                      </div>
+                      <div className="h-5 w-32 rounded-md bg-card-soft shimmer" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

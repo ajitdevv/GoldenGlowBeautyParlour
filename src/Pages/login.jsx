@@ -142,7 +142,7 @@ export const Login = () => {
         </button>
 
         <p className="mt-5 text-center text-xs text-muted">
-          Protected by Golden Glow · v1.0
+          v1.0
         </p>
       </form>
     </div>
